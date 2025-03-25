@@ -10,29 +10,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Link from 'next/link'
+
+interface HeaderProps {
+  showBackButton?: boolean
+}
 
 
-
-const Header = () => {
+const Header = ({ showBackButton = true }: HeaderProps) => {
   return (
-    <div className='border-b px-4 py-2 flex justify-between items-center h-16'>
-      <div className='flex items-center gap-2'>
-        <div className='flex items-center gap-2 cursor-pointer'>
-          <ArrowLeft size={16} />
-        </div>
-        <input type="text" placeholder='Untitled Form' className='outline-none' />
-      </div>
+    <div className={`border-b px-4 py-2 flex justify-between items-center h-14 ${showBackButton ? 'justify-between' : 'justify-end'}`}>
+      {
+        showBackButton && (
+          <div className='flex items-center gap-2'>
+            <Link href='/dashboard' className='flex items-center gap-2 cursor-pointer'>
+              <ArrowLeft size={16} />
+            </Link>
+          </div>
+        )
+      }
 
 
       <div className='flex gap-4'>
-        <div className='flex gap-2'>
-          <Button variant='outline'>
-            Preview
-          </Button>
-          <Button>
-            Save
-          </Button>
-        </div>
+        {
+          showBackButton && (
+            <div className='flex gap-2'>
+              <Button variant='outline'>
+                Preview
+              </Button>
+              <Button>
+                Save
+              </Button>
+            </div>
+          )
+        }
 
         <div className='relative'>
           <DropdownMenu>

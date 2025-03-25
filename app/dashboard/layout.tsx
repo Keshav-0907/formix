@@ -17,7 +17,7 @@ export default function DashboardLayout({
         <div className="flex">
             {!isCreateFormPage && <Sidebar />}
             <div className="flex-1">
-                <Header />
+                <Header showBackButton={isCreateFormPage} />
                 <DndProvider backend={HTML5Backend}>
                     {children}
                 </DndProvider>
