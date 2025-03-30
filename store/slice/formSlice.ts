@@ -1,24 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+
+interface Heading {
+  placeholder: string;
+  level: number;
+}
+
+interface Paragraph {
+  placeholder: string;
+}
+
+interface Input {
+  placeholder: string;
+  required: boolean;
+}
+
 // Define the type for an element
 interface Element {
   id: string;
+  position: number;
   type: string;
-  properties: Record<string, any>;
+  placeholder: string;
+  required: boolean;
+  style: Heading | Paragraph | Input;
 }
 
 // Define the slice state type
 interface FormState {
   elements: Element[];
-  theme: "light" | "dark";
-  backgroundColor: string;
+  title: string;
+  description: string,
+  theme: 'light' | 'dark',
+  isActive: boolean,
+  activeElement: Element | null
 }
 
 // Initial state
 const initialState: FormState = {
   elements: [],
-  theme: "light",
-  backgroundColor: "#FFFFFF",
+  title: 'Untitled Form',
+  description: '',
+  theme: 'light',
+  isActive: false,
+  activeElement: null
 };
 
 const formSlice = createSlice({
@@ -28,23 +52,20 @@ const formSlice = createSlice({
     addElement: (state, action: PayloadAction<Element>) => {
       state.elements.push(action.payload);
     },
-    removeElement: (state, action: PayloadAction<string>) => {
-      state.elements = state.elements.filter((element) => element.id !== action.payload);
+    setTitle: (state, action: PayloadAction<string>) => {
+      state.title = action.payload;
     },
-    updateElement: (state, action: PayloadAction<Element>) => {
-      const index = state.elements.findIndex((element) => element.id === action.payload.id);
-      if (index !== -1) {
-        state.elements[index] = action.payload;
-      }
+    setDescription: (state, action: PayloadAction<string>) => {
+      state.description = action.payload;
     },
-    setTheme: (state, action: PayloadAction<"light" | "dark">) => {
-      state.theme = action.payload;
+    setActiveElement: (state, action: PayloadAction<Element>) => {
+      state.activeElement = action.payload;
     },
-    setBackgroundColor: (state, action: PayloadAction<string>) => {
-      state.backgroundColor = action.payload;
+    removeActiveElement: (state) => {
+      state.activeElement = null;
     },
   },
 });
 
-export const { addElement, removeElement, updateElement, setTheme, setBackgroundColor } = formSlice.actions;
+export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement } = formSlice.actions;
 export default formSlice.reducer;

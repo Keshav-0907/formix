@@ -1,29 +1,26 @@
 'use client'
-import React, { ElementType, useState } from 'react'
+import React, { ElementType, useRef, useState } from 'react'
 import { useDrag } from "react-dnd";
 import { Type, AlignLeft, ListChecks, Square, CircleOff, ToggleLeft, Sliders, Star, Calendar, Upload, SeparatorHorizontal, Heading, LayoutGrid, AlignJustify } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { basicElements, advancedElements, layoutElements } from '@/utils/default';
+import { basicElements, layoutElements } from '@/utils/default';
 
 interface FormElementItemProps {
   type: string;
   icon: React.ElementType;
-  label: string;
   description: string;
 }
 
 const FormElementItem: React.FC<FormElementItemProps> = ({
   type,
   icon: Icon,
-  label,
   description,
 }) => {
-  const addElement = (newElement: any) => {
-    console.log("addElement", newElement);
-  }
+  
+  console.log(type);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "FORM_ELEMENT",
@@ -35,27 +32,24 @@ const FormElementItem: React.FC<FormElementItemProps> = ({
           id: `element-${Date.now()}`,
           type,
           name: `${type}_${Date.now()}`,
-          label: label,
-          placeholder: `Enter ${label.toLowerCase()}`,
+          placeholder: `Enter ${type.toLowerCase()}`,
           required: false,
         };
-        addElement(newElement);
       }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   }));
-
+  
   return (
     <div
-      ref={drag}
+      ref={drag as any}
       className={`draggable-element p-3 rounded-lg border bg-card flex gap-3 cursor-grab ${isDragging ? "opacity-50" : ""
         }`}
     >
       <Icon className="h-5 w-5 text-primary shrink-0 mt-0.5" />
       <div>
-        <h3 className="font-medium text-sm">{label}</h3>
         <p className="text-xs text-muted-foreground">{description}</p>
       </div>
     </div>
@@ -64,10 +58,7 @@ const FormElementItem: React.FC<FormElementItemProps> = ({
 
 const ElementSelector = () => {
   const [activeTab, setActiveTab] = useState("elements");
-
   
-
-
   return (
     <div className="border-r h-full flex flex-col ">
       <Tabs defaultValue="elements" value={activeTab} onValueChange={setActiveTab} className=''>
@@ -89,28 +80,8 @@ const ElementSelector = () => {
                     {basicElements.map((element) => (
                       <FormElementItem
                         key={element.type}
-                        type={element.type as ElementType}
+                        type={element.type}
                         icon={element.icon}
-                        label={element.label}
-                        description={element.description}
-                      />
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="advanced">
-                <AccordionTrigger className="hover:no-underline">
-                  <div className="text-sm font-medium">Advanced Elements</div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="space-y-2">
-                    {advancedElements.map((element) => (
-                      <FormElementItem
-                        key={element.type}
-                        type={element.type as ElementType}
-                        icon={element.icon}
-                        label={element.label}
                         description={element.description}
                       />
                     ))}
@@ -127,9 +98,8 @@ const ElementSelector = () => {
                     {layoutElements.map((element) => (
                       <FormElementItem
                         key={element.type}
-                        type={element.type as ElementType}
+                        type={element.type}
                         icon={element.icon}
-                        label={element.label}
                         description={element.description}
                       />
                     ))}

@@ -19,7 +19,7 @@ interface HeaderProps {
 
 const Header = ({ showBackButton = true }: HeaderProps) => {
   return (
-    <div className={`border-b px-4 py-2 flex justify-between items-center h-14 ${showBackButton ? 'justify-between' : 'justify-end'}`}>
+    <div className={`border-b fixed top-0 left-0 right-0 z-50 bg-white px-4 py-2 flex justify-between items-center h-14 ${showBackButton ? 'justify-between' : 'justify-end'}`}>
       {
         showBackButton && (
           <div className='flex items-center gap-2'>
