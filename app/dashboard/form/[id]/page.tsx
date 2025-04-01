@@ -4,10 +4,13 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import StatCard from '@/components/dashboard/StatCard'
 import { Button } from '@/components/ui/button'
+import { useSession } from 'next-auth/react'
 
 const SingleFormPage = () => {
   const { id } = useParams()
   const [form, setForm] = React.useState<any>(null)
+  const { data: session } = useSession()
+  const [responses, setResponses] = React.useState<any>(null)
 
   useEffect(() => {
 
@@ -18,10 +21,21 @@ const SingleFormPage = () => {
       setForm(res.data)
     }
 
+    const getResponses = async () => {
+      const res = await axios.post('/api/forms/getResponses', {
+        formId: id,
+        owner: session?.user?.email
+      })
+      setResponses(res.data.responses)
+    }
+
+
+    getResponses()
     getForm()
   }, [])
 
 
+  console.log('responses', responses)
 
   return (
     <div className='p-5'>

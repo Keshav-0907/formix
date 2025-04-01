@@ -39,7 +39,6 @@ export const renderFormElement = (
                 </div>
             );
         case 'heading':
-            console.log('Heading Element', element);
             const headingStyle = () => {
                 switch (element.level as string) {
                     case 'h1':
@@ -49,14 +48,15 @@ export const renderFormElement = (
                     case 'h3':
                         return 'text-2xl font-medium';
                     case 'h4':
-                        return 'text-xl';
+                        return 'text-xl font-normal';
                     case 'h5':
                         return 'text-lg font-light';
                     case 'h6':
-                        return 'text-base';
+                        return 'text-base font-light';
                     default:
-                        return 'text-base font-bold';
+                        return 'text-base font-normal';
                 }
+
             };
 
             return (
@@ -82,4 +82,28 @@ export const renderFormElement = (
         default:
             return <div>Unsupported element type: {element.type}</div>;
     }
+};
+
+
+export const formatDateAndTime = (dateString: string, showTime: boolean) => {
+    const date = new Date(dateString);
+
+    const day = date.getDate();
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const year = date.getFullYear();
+
+    const formattedDate = `${day} ${month} ${year}`;
+
+    if (!showTime) return formattedDate;
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
+    const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+
+    return `${formattedDate} | ${formattedTime}`;
 };
