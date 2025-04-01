@@ -1,26 +1,34 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import useForm from '@/hooks/useForm'
-import { Button } from "@/components/ui/button"; // if using shadcn or you can use native <button>
-import { setActiveElement } from '@/store/slice/formSlice';
+import { Button } from "@/components/ui/button"
+import { setActiveElement } from '@/store/slice/formSlice'
 
 const ElementEditor = () => {
-  const { form, getSingleElement, discardActiveElement } = useForm();
+  const { form, getSingleElement, discardActiveElement, updateElementProperty } = useForm();
   const element = getSingleElement(form.activeElement as unknown as string);
+  const editorRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (key: string, value: any) => {
-    console.log(key, value);
+    updateElementProperty({
+      ...element,
+      [key]: value
+    });
   };
 
-  const handleCancel = () => {
-    discardActiveElement();
-  };
+  // 👇 Click-away logic
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (editorRef.current && !editorRef.current.contains(event.target as Node)) {
+        discardActiveElement(); // deselect element
+      }
+    };
 
-  const handleSave = () => {
-    console.log("Saved element:", element);
-  };
-
-  console.log('active element', element);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [discardActiveElement]);
 
   const renderEditorFields = () => {
     if (!element) return null;
@@ -31,13 +39,7 @@ const ElementEditor = () => {
           <>
             <input
               type='text'
-              value={''}
-              onChange={(e) => handleChange('label', e.target.value)}
-              className='border p-2 rounded'
-            />
-            <input
-              type='text'
-              value={''}
+              value={element.placeholder}
               onChange={(e) => handleChange('placeholder', e.target.value)}
               className='border p-2 rounded'
             />
@@ -47,18 +49,13 @@ const ElementEditor = () => {
                 checked={element.required || false}
                 onChange={(e) => handleChange('required', e.target.checked)}
               />
+              <div className='text-sm text-gray-500'>Required</div>
             </div>
           </>
         );
       case 'textarea':
         return (
           <>
-            <input
-              type='text'
-              value={''}
-              onChange={(e) => handleChange('label', e.target.value)}
-              className='border p-2 rounded'
-            />
             <input
               type='text'
               value={element.placeholder || ''}
@@ -77,7 +74,7 @@ const ElementEditor = () => {
               className='border p-2 rounded'
             />
             <select
-              value={'Add Heading'}
+              value={element.level || 'h1'}
               onChange={(e) => handleChange('level', e.target.value)}
               className='border p-2 rounded'
             >
@@ -94,7 +91,7 @@ const ElementEditor = () => {
         return (
           <>
             <textarea
-              value={''}
+              value={element.content || ''}
               onChange={(e) => handleChange('content', e.target.value)}
               className='border p-2 rounded'
             />
@@ -108,19 +105,13 @@ const ElementEditor = () => {
   };
 
   return (
-    <div className='w-full h-full border-l flex flex-col justify-between p-2 relative'>
+    <div className='w-full h-full border-l flex flex-col justify-between p-2 relative' ref={editorRef}>
       {
         form.activeElement ? (
           <>
             <div className='w-full bg-white rounded-lg p-4 shadow-md flex flex-col gap-4 overflow-y-auto'>
               <h2 className='text-lg font-semibold capitalize'>Editing: {element?.type}</h2>
               {renderEditorFields()}
-            </div>
-
-            {/* Save / Cancel Bar */}
-            <div className='sticky bottom-0 w-full bg-white border-t p-4 flex justify-between gap-2'>
-              <Button variant="outline" onClick={handleCancel}>Cancel</Button>
-              <Button onClick={handleSave}>Save</Button>
             </div>
           </>
         ) : (
@@ -133,4 +124,4 @@ const ElementEditor = () => {
   )
 }
 
-export default ElementEditor;
+export default ElementEditor

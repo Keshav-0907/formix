@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Heading {
   placeholder: string;
-  level: number;
+  level: string;
 }
 
 interface Paragraph {
@@ -64,8 +64,14 @@ const formSlice = createSlice({
     removeActiveElement: (state) => {
       state.activeElement = null;
     },
+    modifyElement: (state, action: PayloadAction<{ id: string, [key: string]: any }>) => {
+      const index = state.elements.findIndex((el: Element) => el.id === action.payload.id);
+      if (index !== -1) {
+        state.elements[index] = { ...state.elements[index], ...action.payload };
+      }
+    }
   },
 });
 
-export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement } = formSlice.actions;
+export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement } = formSlice.actions;
 export default formSlice.reducer;

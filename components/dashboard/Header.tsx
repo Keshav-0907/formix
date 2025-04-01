@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from 'next/link'
+import useForm from '@/hooks/useForm'
 
 interface HeaderProps {
   showBackButton?: boolean
@@ -18,8 +19,13 @@ interface HeaderProps {
 
 
 const Header = ({ showBackButton = true }: HeaderProps) => {
+  const {form} = useForm()
+
+  const handleFormSave = () =>{
+    console.log('form from header', form)
+  }
   return (
-    <div className={`border-b fixed top-0 left-0 right-0 z-50 bg-white px-4 py-2 flex justify-between items-center h-14 ${showBackButton ? 'justify-between' : 'justify-end'}`}>
+    <div className={`border-b sticky top-0 left-0 right-0 z-50 bg-white px-4 py-2 flex justify-between items-center h-14 ${showBackButton ? 'justify-between' : 'justify-end'}`}>
       {
         showBackButton && (
           <div className='flex items-center gap-2'>
@@ -38,7 +44,7 @@ const Header = ({ showBackButton = true }: HeaderProps) => {
               <Button variant='outline'>
                 Preview
               </Button>
-              <Button>
+              <Button onClick={handleFormSave}>
                 Save
               </Button>
             </div>

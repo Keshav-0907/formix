@@ -10,6 +10,7 @@ type FormElement = {
   type: string;
   placeholder: string;
   required: boolean;
+  level?: string;
   style: {
     placeholder: string;
     level?: number;
@@ -42,7 +43,7 @@ const FormPreview = () => {
       case 'input':
         return (
           <div className='flex items-start gap-2'>
-            <GripVertical className='w-4 h-4 text-gray-400 mt-2' />
+            <GripVertical className='w-4 h-4 text-gray-400 mt-2 cursor-grab' />
             <input
               type="text"
               placeholder={element.placeholder}
@@ -54,7 +55,7 @@ const FormPreview = () => {
       case 'textarea':
         return (
           <div className='flex items-start gap-2'>
-            <GripVertical className='w-4 h-4 text-gray-400 mt-2' />
+            <GripVertical className='w-4 h-4 text-gray-400 mt-2 cursor-grab' />
             <textarea
               placeholder={element.placeholder}
               required={element.required}
@@ -63,24 +64,44 @@ const FormPreview = () => {
             />
           </div>
         );
-      case 'heading':
-        return (
-          <div className='flex items-center gap-2'>
-            <GripVertical className='w-4 h-4 text-gray-400' />
-            <h2 className="text-2xl font-semibold text-gray-800">{element.placeholder}</h2>
-          </div>
-        );
+        case 'heading':
+          const headingStyle = () => {
+            switch (element.level as string) {
+              case 'h1':
+                return 'text-4xl font-bold';
+              case 'h2':
+                return 'text-3xl font-semibold';
+              case 'h3':
+                return 'text-2xl font-medium';
+              case 'h4':
+                return 'text-xl';
+              case 'h5':
+                return 'text-lg font-light';
+              case 'h6':
+                return 'text-base';
+              default:
+                return 'text-base font-bold';
+            }
+          };
+        
+          return (
+            <div className='flex items-center gap-2'>
+              <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />
+              <div className={`${headingStyle()}`}>{element.placeholder}</div>
+            </div>
+          );
+        
       case 'paragraph':
         return (
           <div className='flex items-center gap-2'>
-            <GripVertical className='w-4 h-4 text-gray-400' />
+            <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />
             <p className="text-gray-600">{element.placeholder}</p>
           </div>
         );
       case 'divider':
         return (
           <div className='flex items-center gap-2'>
-            <GripVertical className='w-4 h-4 text-gray-400' />
+            <GripVertical className='w-4 h-4 text-gray-400  cursor-grab' />
             <hr className="flex-1 border-t border-gray-300" />
           </div>
         );
@@ -115,9 +136,8 @@ const FormPreview = () => {
         {/* Drop Area */}
         <div
           ref={drop as any}
-          className={`w-full min-h-[300px] rounded-lg transition-all ${
-            isOver ? 'bg-blue-50' : ''
-          }`}
+          className={`w-full min-h-[300px] rounded-lg transition-all ${isOver ? 'bg-blue-50' : ''
+            }`}
         >
           {form.elements.length === 0 ? (
             <div className="text-center text-gray-400 text-lg">
@@ -128,7 +148,7 @@ const FormPreview = () => {
               {form.elements.map((element, index) => (
                 <div
                   key={index}
-                  className="p-4 bg-white border border-gray-200 rounded-md shadow-sm hover:shadow-md transition cursor-pointer"
+                  className="transition cursor-pointer"
                   onClick={() => addActiveElement(element)}
                 >
                   {renderFormElement(element, 'edit')}

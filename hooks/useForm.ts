@@ -1,6 +1,6 @@
 'use client'
 import { useSelector, useDispatch } from "react-redux";
-import { addElement, setTitle, setActiveElement, removeActiveElement, setDescription } from "@/store/slice/formSlice";
+import { addElement, setTitle, setActiveElement, removeActiveElement, setDescription, modifyElement } from "@/store/slice/formSlice";
 import { RootState } from "@/store/store";
 
 const useForm = () => {
@@ -31,7 +31,11 @@ const useForm = () => {
     dispatch(setDescription(description));
   };
 
-  return { form, addFormElement, updateFormTitle, addActiveElement, setActiveElement, getSingleElement, discardActiveElement, updateFormDescription };
+  const updateElementProperty = ({ id, ...rest }: any) => {
+    dispatch(modifyElement({ id, ...rest }));
+  };
+
+  return { form, addFormElement, updateFormTitle, addActiveElement, setActiveElement, getSingleElement, discardActiveElement, updateFormDescription, updateElementProperty };
 };
 
 export default useForm;

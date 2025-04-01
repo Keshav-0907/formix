@@ -9,17 +9,17 @@ const CreateNewForm = () => {
   return (
     <div className="flex">
     {/* Left Sidebar (Element Selector) */}
-    <div className="w-3/12 h-[calc(100vh-56px)] sticky mt-[56px] overflow-hidden">
+    <div className="w-3/12 h-[calc(100vh-56px)] sticky  overflow-hidden">
       <ElementSelector />
     </div>
   
     {/* Main Content (Form Preview) */}
-    <div className="w-6/12 mt-[56px]"> {/* You can adjust width if needed */}
+    <div className="w-6/12"> {/* You can adjust width if needed */}
       <FormPreview />
     </div>
   
     {/* Right Sidebar (Element Editor) */}
-    <div className="w-3/12 h-[calc(100vh-56px)] sticky mt-[56px] overflow-hidden">
+    <div className="w-3/12 h-[calc(100vh-56px)] sticky overflow-hidden">
       <ElementEditor />
     </div>
   </div>

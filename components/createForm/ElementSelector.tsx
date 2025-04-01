@@ -20,8 +20,6 @@ const FormElementItem: React.FC<FormElementItemProps> = ({
   description,
 }) => {
   
-  console.log(type);
-
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "FORM_ELEMENT",
     item: { type },
