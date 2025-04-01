@@ -23,7 +23,7 @@ const AuthPage = () => {
   return (
     <div className='flex h-screen w-screen'>
       {/* Left Section */}
-      <div className='w-full md:w-1/2 h-full bg-gray-100 flex items-center justify-center p-6'>
+      <div className='w-full h-full bg-gray-100 flex items-center justify-center p-6'>
         <Card className='w-full max-w-sm shadow-lg rounded-xl'>
           <CardHeader className='text-center'>
             <CardTitle className='text-2xl font-semibold'>Welcome Back</CardTitle>
@@ -34,17 +34,6 @@ const AuthPage = () => {
             </Button>
           </CardContent>
         </Card>
-      </div>
-
-      {/* Right Section (Image/Background) */}
-      <div className='hidden md:flex w-1/2 h-full bg-black relative'>
-        <Image
-          src='/auth-bg.jpg'
-          alt='Auth Background'
-          layout='fill'
-          objectFit='cover'
-          className='opacity-70'
-        />
       </div>
     </div>
   )

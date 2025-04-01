@@ -12,21 +12,28 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Link from 'next/link'
 import useForm from '@/hooks/useForm'
-
-interface HeaderProps {
-  showBackButton?: boolean
-}
+import { signOut, useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 
-const Header = ({ showBackButton = true }: HeaderProps) => {
-  const {form} = useForm()
+const Header = ({ showBackButton = true }) => {
+  const { form } = useForm()
+  const { data: session } = useSession();
+  const pathname = usePathname()
 
-  const handleFormSave = () =>{
+
+  const showFormTitle =
+    pathname.includes('/dashboard/form/create')
+
+    console.log('showFormTitle', showFormTitle)
+
+  const handleFormSave = () => {
     console.log('form from header', form)
   }
   return (
     <div className={`border-b sticky top-0 left-0 right-0 z-50 bg-white px-4 py-2 flex justify-between items-center h-14 ${showBackButton ? 'justify-between' : 'justify-end'}`}>
-      {
+     <div className='flex items-center gap-2'>
+     {
         showBackButton && (
           <div className='flex items-center gap-2'>
             <Link href='/dashboard' className='flex items-center gap-2 cursor-pointer'>
@@ -35,6 +42,15 @@ const Header = ({ showBackButton = true }: HeaderProps) => {
           </div>
         )
       }
+      {
+        showFormTitle && (
+          <div className='flex items-center gap-2'>
+           <input type="text" className='border border-gray-300 rounded-md px-2 py-1' value={form.title} placeholder='Form Title' />
+          </div>
+        )
+      }
+     </div>
+
 
 
       <div className='flex gap-4'>
@@ -55,18 +71,24 @@ const Header = ({ showBackButton = true }: HeaderProps) => {
           <DropdownMenu>
             <DropdownMenuTrigger className='cursor-pointer'>
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={session?.user.image} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
 
             <DropdownMenuContent className='top-2 absolute -right-4 w-52'>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>Hi, {session?.user.name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>Help</DropdownMenuItem>
+              <DropdownMenuItem>
+                <div className='' onClick={() => signOut({
+                  redirectTo: '/'
+                })}>
+                  Sign Out
+                </div>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
