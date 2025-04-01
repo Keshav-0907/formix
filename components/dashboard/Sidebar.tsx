@@ -33,9 +33,9 @@ const Sidebar = () => {
   return (
     <div className='w-44 bg-[#F8F8F8] border-r-[1px] border-[#E5E5E5] h-screen flex flex-col justify-between'>
       <div className='flex flex-col gap-4'>
-        <div className='italic text-2xl font-bold text-[#1A1A1A] mt-4 justify-center flex'>
+        <Link href={'/dashboard'} className='italic text-2xl font-bold text-[#1A1A1A] mt-4 justify-center flex'>
           Formix
-        </div>
+        </Link>
 
         <div className='px-2'>
           <button onClick={()=>router.push('/dashboard/form/create')} className='text-xs flex items-center gap-1 border-[1px] border-black/30 w-full py-2 rounded-sm cursor-pointer px-2 shadow-sm'>
