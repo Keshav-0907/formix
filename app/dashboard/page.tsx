@@ -5,8 +5,15 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import StatCard from '@/components/dashboard/StatCard'
 import RecentForms from '@/components/dashboard/RecentForms'
+import { Sparkles } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+
+
+
 const DashboardPage = () => {
+
   const { data: session } = useSession()
+  const router = useRouter()
 
 
   return (
@@ -23,9 +30,10 @@ const DashboardPage = () => {
         </div>
 
         <div>
-          <Button>
-            Create Form
-          </Button>
+          <button onClick={() => router.push('/dashboard/form/create')} className='text-xs bg-[#F8F8F8] flex items-center gap-1 border-[1px] border-black/30 w-full py-2 rounded-sm cursor-pointer px-2 shadow-sm'>
+            <Sparkles strokeWidth={1} size={16} />
+            <span>Create New Form</span>
+          </button>
         </div>
       </div>
 
