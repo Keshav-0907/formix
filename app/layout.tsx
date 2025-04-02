@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { StoreProvider } from "@/store/StoreProvider";
-import { Libre_Baskerville } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
 
 const geistSans = Geist({
@@ -16,11 +16,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const librenaskerville = Libre_Baskerville({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-playfair', // optional for CSS variables
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
 });
 
 
@@ -37,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${librenaskerville.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
       >
         <SessionProvider>
           <StoreProvider>
