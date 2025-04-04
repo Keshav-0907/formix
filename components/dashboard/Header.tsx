@@ -89,7 +89,7 @@ const Header = () => {
             <React.Fragment key={path.href}>
               <BreadcrumbItem>
                 {index === paths.length - 1 ? (
-                  <BreadcrumbPage className='text-xs'>{path.label}</BreadcrumbPage>
+                  <BreadcrumbPage className='text-xs text-[#F8F8F8]'>{path.label}</BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink href={path.href} className='text-xs'>{path.label}</BreadcrumbLink>
                 )}
@@ -104,7 +104,7 @@ const Header = () => {
 
 
   return (
-    <div className={`border-b sticky top-0 left-0 right-0 z-50 bg-[#F8F8F8] px-4 py-2 flex items-center h-14 justify-between`}>
+    <div className={`sticky top-0 left-0 right-0 z-50 text-[#F8F8F8] border-b border-[#4B4B4B] bg-[#1D1E21] px-4 py-2 flex items-center h-14 justify-between`}>
       <div>
         {
           showFormTitle ? (
@@ -115,7 +115,7 @@ const Header = () => {
                 </Link>
               </div>
               <div className='flex items-center gap-2'>
-                <input type="text" className='border border-gray-300 rounded-md px-2 py-1' value={form.title} onChange={(e) => updateFormTitle(e.target.value)} placeholder='Form Title' />
+                <input type="text" className='rounded-md px-2 py-1' value={form.title} onChange={(e) => updateFormTitle(e.target.value)} placeholder='Form Title' />
               </div>
             </div>
           ) : (
@@ -144,14 +144,18 @@ const Header = () => {
 
         <div className='relative  flex items-center'>
           <DropdownMenu>
-            <DropdownMenuTrigger className='cursor-pointer'>
+            <DropdownMenuTrigger className='cursor-pointer flex items-center gap-2 outline-none'>
               <Avatar>
                 <AvatarImage src={session?.user.image} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
+              <div className='flex items-start flex-col'>
+                <div className='text-sm'> {session.user.name} </div>
+                <div className='text-xs text-gray-500'> {session.user.email} </div>
+              </div>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent className='top-2 absolute -right-4 w-52'>
+            <DropdownMenuContent className='top-2 absolute right-0 w-52'>
               <DropdownMenuLabel>Hi, {session?.user.name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>

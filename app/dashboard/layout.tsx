@@ -16,17 +16,15 @@ export default function DashboardLayout({
   const pathname = usePathname()
   const router = useRouter()
   const isCreateFormPage = pathname === '/dashboard/form/create'
-  const {data: session, status} = useSession()
+  const { data: session, status } = useSession()
   const loading = status === 'loading'
   const isUser = session?.user
 
-  const shouldShowHeader =
-    !pathname.includes('/dashboard/*')
+  const shouldShowHeader = !pathname.includes('/dashboard/*')
 
-  // Redirect if not authenticated (after loading finishes)
   useEffect(() => {
     if (!loading && !isUser) {
-      router.push('/auth') // or your login page
+      router.push('/auth')
     }
   }, [loading, isUser, router])
 
@@ -39,12 +37,15 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       {!isCreateFormPage && <Sidebar />}
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col overflow-hidden">
         {shouldShowHeader && <Header />}
         <DndProvider backend={HTML5Backend}>
-          {children}
+          {/* Scrollable children only */}
+          <div className="flex-1 overflow-y-auto bg-black">
+            {children}
+          </div>
         </DndProvider>
       </div>
     </div>

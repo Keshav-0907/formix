@@ -17,11 +17,11 @@ const DashboardPage = () => {
 
 
   return (
-    <div className='p-5 flex flex-col gap-5 bg-slate-100 h-[calc(100vh-58px)]'>
+    <div className='p-5 flex flex-col gap-5 bg-black h-full'>
       <div className='flex justify-between items-center'>
         <div className='flex flex-col gap-1'>
-          <div className='text-2xl font-bold'>
-            Hey, {session?.user?.name}
+          <div className='text-2xl font-bold text-[#F8F8F8]'>
+            Hey, {session?.user?.name} 👋
           </div>
 
           <div className='text-sm text-gray-500'>
@@ -45,7 +45,7 @@ const DashboardPage = () => {
 
 
       <div className='flex flex-col gap-2 h-full'>
-        <div className='text-sm font-bold'>
+        <div className='text-sm font-bold text-[#F8F8F8]'>
           Recent Forms
         </div>
         <RecentForms />
