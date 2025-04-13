@@ -1,6 +1,6 @@
 'use client'
 import { useSelector, useDispatch } from "react-redux";
-import { addElement, setTitle, setActiveElement, removeActiveElement, setDescription, modifyElement } from "@/store/slice/formSlice";
+import { addElement, setTitle, setActiveElement, removeActiveElement, setDescription, modifyElement, deleteElement } from "@/store/slice/formSlice";
 import { RootState } from "@/store/store";
 
 const useForm = () => {
@@ -9,6 +9,10 @@ const useForm = () => {
 
   const addFormElement = (element: any) => {
     dispatch(addElement(element));
+  };
+
+  const removeFormElement = (id: string) => {
+    dispatch(deleteElement(id));
   };
 
   const updateFormTitle = (title: string) => {
@@ -32,10 +36,11 @@ const useForm = () => {
   };
 
   const updateElementProperty = ({ id, ...rest }: any) => {
+    console.log("Updating element with ID:", id, "with properties:", rest);
     dispatch(modifyElement({ id, ...rest }));
   };
 
-  return { form, addFormElement, updateFormTitle, addActiveElement, setActiveElement, getSingleElement, discardActiveElement, updateFormDescription, updateElementProperty };
+  return { form, addFormElement, updateFormTitle, addActiveElement, setActiveElement, getSingleElement, discardActiveElement, updateFormDescription, updateElementProperty, removeFormElement };
 };
 
 export default useForm;

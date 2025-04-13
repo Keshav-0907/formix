@@ -6,18 +6,20 @@ export interface IForm {
     elements: object[];
     owner: string;
     responses: object[];
+    background: string;
 }
 
 export type FormElement = {
     id: string;
     position: number;
+    heading?: string;
     type: string;
     placeholder: string;
     required: boolean;
     level?: string;
     style: {
       placeholder: string;
-      level?: number;
+      level?: string;
       required?: boolean;
     };
-  };
+};

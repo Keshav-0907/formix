@@ -58,11 +58,11 @@ const SingleFormPage = () => {
             <div className='text-sm text-slate-800'>{form.description}</div>
           </div>
 
-          <div className='flex justify-between items-center gap-10'>
+          {/* <div className='flex justify-between items-center gap-10'>
             <StatCard />
             <StatCard />
             <StatCard />
-          </div>
+          </div> */}
 
           <div className='flex gap-2 flex-col'>
             <div className='flex justify-between items-center w-full'>

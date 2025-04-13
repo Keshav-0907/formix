@@ -13,7 +13,7 @@ import {
 import Link from 'next/link'
 import useForm from '@/hooks/useForm'
 import { signOut, useSession } from 'next-auth/react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import axios from 'axios'
 import {
   Breadcrumb,
@@ -30,6 +30,7 @@ import confetti from 'canvas-confetti'
 const Header = () => {
   const { data: session } = useSession();
   const pathname = usePathname()
+  const router = useRouter()
   const { form, addFormElement, updateFormTitle, addActiveElement, updateFormDescription } = useForm();
 
   const showFormTitle =
@@ -58,6 +59,7 @@ const Header = () => {
         }
       });
       console.log('Form created successfully')
+      router.push('/dashboard')
     }
   }
 
@@ -132,10 +134,10 @@ const Header = () => {
         {
           showBackButton && (
             <div className='flex gap-2'>
-              <Button variant='outline'>
+              {/* <Button variant='outline' className='bg-white text-black hover:bg-white/80'>
                 Preview
-              </Button>
-              <Button onClick={handleFormSave}>
+              </Button> */}
+              <Button onClick={handleFormSave} className='bg-white text-black hover:bg-white/80'>
                 Save
               </Button>
             </div>

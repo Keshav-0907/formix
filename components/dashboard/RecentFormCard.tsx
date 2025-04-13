@@ -80,7 +80,7 @@ const RecentFormCard = ({ form, index }) => {
                         )}
                     </div>
                     <div className='mt-4 text-right'>
-                        <Link href={`/dashboard/form/${form._id}`} className='text-blue-600 underline text-sm'>
+                        <Link href={`/${form._id}`} className='text-blue-600 underline text-sm'>
                             Go to Form &rarr;
                         </Link>
                     </div>

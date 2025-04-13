@@ -2,19 +2,26 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import useForm from '@/hooks/useForm';
-import { GripVertical } from 'lucide-react';
+import { GripVertical, Trash2 } from 'lucide-react';
 import { renderFormElement } from '@/utils/HelperFunctions';
 
 
 const FormPreview = () => {
-  const { form, addFormElement, updateFormTitle, addActiveElement, updateFormDescription } = useForm();
+  const { form, addFormElement, updateFormTitle, addActiveElement, updateFormDescription, removeFormElement } = useForm();
+
+  const handleRemoveElement = async (id: string) => {
+    removeFormElement(id);
+  };
 
   const [{ isOver }, drop] = useDrop({
     accept: "FORM_ELEMENT",
     drop: (item: { type: string }) => {
+      console.log(item);
       const newElement = {
         id: `element-${Date.now()}`,
         type: item.type,
+        heading: item.type === "input" || "textarea" ? `Add a Heading to this field` : undefined,
+        level: item.type === "heading" ? "h2" : undefined,
         placeholder: `Enter ${item.type.toLowerCase()}`,
         required: false,
         position: form.elements.length,
@@ -50,7 +57,7 @@ const FormPreview = () => {
         {/* Drop Area */}
         <div
           ref={drop as any}
-          className={`w-full min-h-[300px] rounded-lg transition-all ${isOver ? 'bg-blue-50' : ''
+          className={`w-full min-h-[300px] h-full rounded-lg transition-all ${isOver ? 'bg-blue-50' : ''
             }`}
         >
           {form.elements.length === 0 ? (
@@ -62,10 +69,14 @@ const FormPreview = () => {
               {form.elements.map((element, index) => (
                 <div
                   key={index}
-                  className="transition cursor-pointer"
-                  onClick={() => addActiveElement(element)}
+                  className="transition cursor-pointer relative flex w-full gap-1 items-center"
+
                 >
-                  {renderFormElement(element, 'edit')}
+
+                  <div onClick={() => addActiveElement(element)} className='w-full'>
+                    {renderFormElement(element, 'edit')}
+                  </div>
+                  <Trash2 onClick={() => handleRemoveElement(element.id)} className=' bg-red-500 p-1 text-white rounded-full' size={20} />
                 </div>
               ))}
             </div>

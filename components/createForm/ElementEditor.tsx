@@ -3,6 +3,17 @@ import React, { useEffect, useRef } from 'react'
 import useForm from '@/hooks/useForm'
 import { Button } from "@/components/ui/button"
 import { setActiveElement } from '@/store/slice/formSlice'
+import { Switch } from '../ui/switch'
+import { Input } from '../ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from '../ui/separator'
+
 
 const ElementEditor = () => {
   const { form, getSingleElement, discardActiveElement, updateElementProperty } = useForm();
@@ -16,7 +27,6 @@ const ElementEditor = () => {
     });
   };
 
-  // 👇 Click-away logic
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (editorRef.current && !editorRef.current.contains(event.target as Node)) {
@@ -37,46 +47,103 @@ const ElementEditor = () => {
       case 'input':
         return (
           <>
-            <input
-              type='text'
-              value={element.placeholder}
-              onChange={(e) => handleChange('placeholder', e.target.value)}
-              className='border p-2 rounded'
-            />
-            <div className='flex items-center gap-2'>
-              <input
-                type='checkbox'
-                checked={element.required || false}
-                onChange={(e) => handleChange('required', e.target.checked)}
-              />
-              <div className='text-sm text-gray-500'>Required</div>
+            <div className="space-y-4 bg-[#1F1F1F] p-4 rounded-lg shadow-sm border border-[#333] w-full max-w-md">
+              <div>
+                ✏️ Input Field
+              </div>
+              {/* Label Input */}
+              <div className="flex flex-col space-y-1">
+                <label className="text-sm font-medium text-gray-300">Label</label>
+                <input
+                  type="text"
+                  value={element.heading}
+                  onChange={(e) => handleChange('heading', e.target.value)}
+                  className="bg-[#2A2A2A] border border-[#444] text-sm text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  placeholder="Enter field label"
+                />
+              </div>
+
+              {/* Placeholder Input */}
+              <div className="flex flex-col space-y-1">
+                <label className="text-sm font-medium text-gray-300">Placeholder</label>
+                <input
+                  type="text"
+                  value={element.placeholder}
+                  onChange={(e) => handleChange('placeholder', e.target.value)}
+                  className="bg-[#2A2A2A] border border-[#444] text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  placeholder="Enter placeholder text"
+                />
+              </div>
+
+              {/* Required Switch */}
+              <div className="flex items-center justify-between pt-2">
+                <label className="text-sm font-medium text-gray-300">Is this a required field ??</label>
+                <Switch
+                  checked={element.required}
+                  onCheckedChange={(checked) => handleChange('required', checked)}
+                  className="bg-gray-600 data-[state=checked]:bg-green-500"
+                />
+              </div>
             </div>
           </>
+
         );
       case 'textarea':
         return (
-          <>
-            <input
-              type='text'
-              value={element.placeholder || ''}
-              onChange={(e) => handleChange('placeholder', e.target.value)}
-              className='border p-2 rounded'
-            />
-          </>
+          <div className="space-y-4 bg-[#1F1F1F] p-4 rounded-lg shadow-sm border border-[#333] w-full max-w-md">
+            <div>
+              ✏️ Text Area Field
+            </div>
+            {/* Label Input */}
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm font-medium text-gray-300">Label</label>
+              <input
+                type="text"
+                value={element.heading}
+                onChange={(e) => handleChange('heading', e.target.value)}
+                className="bg-[#2A2A2A] border border-[#444] text-sm text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                placeholder="Enter field label"
+              />
+            </div>
+
+            {/* Placeholder Input */}
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm font-medium text-gray-300">Placeholder</label>
+              <input
+                type="text"
+                value={element.placeholder}
+                onChange={(e) => handleChange('placeholder', e.target.value)}
+                className="bg-[#2A2A2A] border border-[#444] text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                placeholder="Enter placeholder text"
+              />
+            </div>
+
+            {/* Required Switch */}
+            <div className="flex items-center justify-between pt-2">
+              <label className="text-sm font-medium text-gray-300">Is this a required field ??</label>
+              <Switch
+                checked={element.required}
+                onCheckedChange={(checked) => handleChange('required', checked)}
+                className="bg-gray-600 data-[state=checked]:bg-green-500"
+              />
+            </div>
+          </div>
         );
       case 'heading':
         return (
-          <>
+          <div className='flex flex-col gap-2 py-5 h-full'>
+
             <input
               type='text'
               value={element.placeholder || ''}
               onChange={(e) => handleChange('placeholder', e.target.value)}
-              className='border p-2 rounded'
+              className="bg-[#2A2A2A] border border-[#444] text-sm text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              placeholder="Enter field label"
             />
             <select
-              value={element.level || 'h1'}
+              value={(element.level ?? 'h1') as string}
               onChange={(e) => handleChange('level', e.target.value)}
-              className='border p-2 rounded'
+              className='p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-[#2A2A2A] border border-[#444] text-sm text-white'
             >
               <option value='h1'>H1</option>
               <option value='h2'>H2</option>
@@ -85,17 +152,20 @@ const ElementEditor = () => {
               <option value='h5'>H5</option>
               <option value='h6'>H6</option>
             </select>
-          </>
+          </div>
         );
       case 'paragraph':
         return (
-          <>
+          <div className="space-y-4 bg-[#1F1F1F] p-4 rounded-lg shadow-sm border border-[#333] w-full max-w-md h-full">
+            <div>
+              ✏️ Add Paragraph
+            </div>
             <textarea
               value={element.content || ''}
               onChange={(e) => handleChange('content', e.target.value)}
-              className='border p-2 rounded'
+              className='border-[1px] outline-no p-2 rounded w-full text-white'
             />
-          </>
+          </div>
         );
       case 'divider':
         return <p className='text-gray-500'>Divider has no editable fields.</p>;
@@ -109,14 +179,23 @@ const ElementEditor = () => {
       {
         form.activeElement ? (
           <>
-            <div className='w-full bg-white rounded-lg p-4 shadow-md flex flex-col gap-4 overflow-y-auto'>
-              <h2 className='text-lg font-semibold capitalize'>Editing: {element?.type}</h2>
-              {renderEditorFields()}
+            <div className='w-full h-full bg-[#1D1E21] text-[#8E8E90] rounded-lg shadow-md flex flex-col gap-4 overflow-y-auto px-3'>
+              <div className='pt-4'>
+                <h1 className='text-white text-sm font-semibold'>Edit Element</h1>
+                <p className='text-gray-400 text-xs'>Edit the properties of the selected element.</p>
+              </div>
+              <Separator />
+              <div className='h-full'>
+                {renderEditorFields()}
+              </div>
             </div>
           </>
         ) : (
-          <div className='w-full h-full bg-white rounded-lg p-4 shadow-md flex flex-col gap-4 items-center justify-center'>
-            <h1 className='text-gray-500 text-center'>No Active Element</h1>
+          <div className='w-full h-full bg-[#000000] rounded-lg p-4 shadow-md flex flex-col gap-4 items-center justify-center'>
+            <div>
+              <h1 className='text-white text-sm text-center'>No Active Element</h1>
+              <p className='text-gray-400 text-xs text-center'>Select an element to edit its properties.</p>
+            </div>
           </div>
         )
       }

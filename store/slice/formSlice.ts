@@ -13,16 +13,25 @@ interface Paragraph {
 interface Input {
   placeholder: string;
   required: boolean;
+  label: string;
+}
+
+interface TextArea {
+  placeholder: string;
+  required: boolean;
+  label: string;
 }
 
 // Define the type for an element
 interface Element {
+  level: string;
+  heading: string | number | readonly string[];
   id: string;
   position: number;
   type: string;
   placeholder: string;
   required: boolean;
-  style: Heading | Paragraph | Input;
+  style: Heading | Paragraph | Input | TextArea;
 }
 
 // Define the slice state type
@@ -52,6 +61,10 @@ const formSlice = createSlice({
     addElement: (state, action: PayloadAction<Element>) => {
       state.elements.push(action.payload);
     },
+    deleteElement: (state, action: PayloadAction<string>) => {
+      state.elements = state.elements.filter((el: Element) => el.id !== action.payload);
+    },
+    
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
@@ -66,6 +79,7 @@ const formSlice = createSlice({
     },
     modifyElement: (state, action: PayloadAction<{ id: string, [key: string]: any }>) => {
       const index = state.elements.findIndex((el: Element) => el.id === action.payload.id);
+      console.log('action', action)
       if (index !== -1) {
         state.elements[index] = { ...state.elements[index], ...action.payload };
       }
@@ -73,5 +87,5 @@ const formSlice = createSlice({
   },
 });
 
-export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement } = formSlice.actions;
+export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement, deleteElement } = formSlice.actions;
 export default formSlice.reducer;

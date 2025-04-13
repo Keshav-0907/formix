@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import StatCard from '@/components/dashboard/StatCard'
 import RecentForms from '@/components/dashboard/RecentForms'
-import { Sparkles } from 'lucide-react'
+import { CheckCheck, File, Sparkles } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 
@@ -38,9 +38,8 @@ const DashboardPage = () => {
       </div>
 
       <div className='flex justify-between gap-5'>
-        <StatCard />
-        <StatCard />
-        <StatCard />
+        <StatCard title={'Total Forms'} description={'This is the description'} icon={<File strokeWidth={1.4} />} value={5}/>
+        <StatCard title={'Responses in the latest form'} description={'2 Responses today'} icon={<CheckCheck strokeWidth={1.4} />} value={20}/>
       </div>
 
 

@@ -56,8 +56,8 @@ const FormBuilder = () => {
       <div className="flex h-screen">
         <ElementSelector />
         <FormPreview 
-          formElements={formElements} 
-          onElementsChange={setFormElements} 
+          // formElements={formElements} 
+          // onElementsChange={setFormElements} 
         />
         
         <DragOverlay>

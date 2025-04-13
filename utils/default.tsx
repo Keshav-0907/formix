@@ -6,12 +6,13 @@ export const basicElements = [
         type: "input",
         icon: Type,
         description: "Single line text field",
-
+        heading: "Add a Heading to this field",
     },
     {
         type: "textarea",
         icon: AlignLeft,
         description: "Multi-line text input",
+        heading: "Add a Heading to this field",
     },
 ];
 
@@ -33,3 +34,12 @@ export const layoutElements = [
         description: "Horizontal line separator",
     }
 ];
+
+export const Themes = [
+    {
+        name: "Default", 
+    },
+    {
+        
+    }
+]
