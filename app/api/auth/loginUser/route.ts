@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         });
     }
    
-    const isPasswordValid = bcrypt.compareSync(password, user.password);
+    const isPasswordValid = bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
         return new Response(JSON.stringify({ message: "Invalid password" }), {
             status: 401,    
