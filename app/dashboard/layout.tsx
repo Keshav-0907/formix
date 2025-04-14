@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect } from "react"
+import { use, useEffect } from "react"
 import { useRouter, usePathname } from 'next/navigation'
 import Header from "@/components/dashboard/Header"
 import Sidebar from "@/components/dashboard/Sidebar"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
-import { useSession } from "next-auth/react"
+import { useAuth } from "@/hooks/useAuth"
 
 export default function DashboardLayout({
   children,
@@ -16,19 +16,17 @@ export default function DashboardLayout({
   const pathname = usePathname()
   const router = useRouter()
   const isCreateFormPage = pathname === '/dashboard/form/create'
-  const { data: session, status } = useSession()
-  const loading = status === 'loading'
-  const isUser = session?.user
+  const { user, loading } = useAuth()
 
   const shouldShowHeader = !pathname.includes('/dashboard/*')
 
   useEffect(() => {
-    if (!loading && !isUser) {
+    if (!loading && !user) {
       router.push('/auth')
     }
-  }, [loading, isUser, router])
+  }, [loading, user, router])
 
-  if (loading || !isUser) {
+  if (loading || !user) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
         <p className="text-lg font-semibold">Loading dashboard...</p>
@@ -43,7 +41,7 @@ export default function DashboardLayout({
         {shouldShowHeader && <Header />}
         <DndProvider backend={HTML5Backend}>
           {/* Scrollable children only */}
-          <div className="flex-1 overflow-y-auto bg-black">
+          <div className="flex-1 overflow-y-auto">
             {children}
           </div>
         </DndProvider>

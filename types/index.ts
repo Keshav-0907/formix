@@ -39,3 +39,10 @@ export type FormElement = {
   required?: boolean;
   data: InputElement | TextAreaElement | HeadingElement | ParagraphElement;
 };
+
+export type IUser = {
+  name: string;
+  email: string;
+  password: string;
+  forms: string[];
+}

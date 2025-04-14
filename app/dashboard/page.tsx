@@ -1,27 +1,27 @@
 'use client'
 import React from 'react'
-import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import StatCard from '@/components/dashboard/StatCard'
 import RecentForms from '@/components/dashboard/RecentForms'
 import { CheckCheck, File, Sparkles } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/hooks/useAuth'
 
 
 
 const DashboardPage = () => {
 
-  const { data: session } = useSession()
+  const {user} = useAuth()
   const router = useRouter()
 
 
   return (
-    <div className='p-5 flex flex-col gap-5 bg-black h-full'>
+    <div className='p-5 flex flex-col gap-5 bg-[#1D1E21] h-full'>
       <div className='flex justify-between items-center'>
         <div className='flex flex-col gap-1'>
           <div className='text-2xl font-bold text-[#F8F8F8]'>
-            Hey, {session?.user?.name} 👋
+            Hey, {user?.name} 👋
           </div>
 
           <div className='text-sm text-gray-500'>

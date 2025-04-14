@@ -1,28 +1,30 @@
 import { formatDateAndTime } from '@/utils/HelperFunctions'
 import axios from 'axios'
 import { Check, CheckCheck, Eye } from 'lucide-react'
-import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import RecentFormCard from './RecentFormCard'
+import { useAuth } from '@/hooks/useAuth'
 
 const RecentForms = () => {
-    const { data: session } = useSession()
+    const {user} = useAuth()
     const [recentForms, serRecetnForms] = useState([])
 
     useEffect(() => {
+        console.log('u', user)
+
+        if(!user) return
         const getRecentForms = async () => {
             const res = await axios.post('/api/forms/getAll', {
-                owner: session.user.email
+                owner: user._id
             })
             if (res.status === 200) {
                 serRecetnForms(res.data)
             }
         }
         getRecentForms()
-    }, [])
+    }, [user])
 
-    console.log('recentForms', recentForms)
 
 
     return (

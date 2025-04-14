@@ -30,29 +30,25 @@ type Props = {
 const FormResponses: React.FC<Props> = ({ headers, responses }) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
-  console.log('headers', headers)
-  console.log('responses', responses)
-
   const columns = useMemo<ColumnDef<Record<string, string>>[]>(() => {
     return [
       {
         accessorKey: 'sno',
         header: 'S. No',
-        cell: info => String(Number(info.row.id) + 1), // Serial No based on row index
+        cell: info => String(Number(info.row.id) + 1),
       },
       {
         accessorKey: 'createdAt',
         header: 'Date',
-        cell: info => new Date(info.getValue() as string).toLocaleDateString(), // Format date
+        cell: info => new Date(info.getValue() as string).toLocaleDateString(),
       },
       ...headers.map(header => ({
         accessorKey: header.id,
         header: header.header,
       })),
-     
     ]
-  }, [headers])  
-  
+  }, [headers])
+
   const data = useMemo<Record<string, string>[]>(() => {
     return responses.map((res, index) => {
       const flatRow: Record<string, string> = {
@@ -65,8 +61,6 @@ const FormResponses: React.FC<Props> = ({ headers, responses }) => {
       return flatRow
     })
   }, [responses])
-  
-  
 
   const table = useReactTable({
     data,
@@ -79,13 +73,11 @@ const FormResponses: React.FC<Props> = ({ headers, responses }) => {
     getSortedRowModel: getSortedRowModel(),
   })
 
-  console.log('table.getRowModel().rows', table.getRowModel().rows)
-
   return (
-    <div className="py-6 w-full mx-auto">
-      <div className="overflow-x-auto rounded-lg shadow">
-        <table className="min-w-full border border-gray-300 bg-white text-sm">
-          <thead className="bg-gray-100">
+    <div className="py-6 w-full mx-auto text-white">
+      <div className="overflow-x-auto rounded-lg shadow border border-[#2f2f2f]">
+        <table className="min-w-full text-sm bg-[#1a1a1a]">
+          <thead className="bg-[#1f1f1f] border-b border-[#2f2f2f]">
             {table.getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
@@ -94,7 +86,7 @@ const FormResponses: React.FC<Props> = ({ headers, responses }) => {
                     <th
                       key={header.id}
                       onClick={header.column.getToggleSortingHandler()}
-                      className="cursor-pointer select-none px-4 py-3 border-b text-left font-medium text-gray-700 hover:bg-gray-200 transition"
+                      className="cursor-pointer select-none px-4 py-3 font-medium text-gray-200 hover:bg-[#2a2a2a] transition border-r border-[#2f2f2f]"
                     >
                       <div className="flex items-center gap-1">
                         {flexRender(header.column.columnDef.header, header.getContext())}
@@ -108,9 +100,9 @@ const FormResponses: React.FC<Props> = ({ headers, responses }) => {
           </thead>
           <tbody>
             {table.getRowModel().rows.map(row => (
-              <tr key={row.id} className="hover:bg-gray-50 even:bg-gray-50">
+              <tr key={row.id} className="hover:bg-[#2a2a2a] even:bg-[#1d1d1d] border-b border-[#2f2f2f]">
                 {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="px-4 py-3 border-b text-gray-800">
+                  <td key={cell.id} className="px-4 py-3 text-gray-300 border-r border-[#2f2f2f]">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

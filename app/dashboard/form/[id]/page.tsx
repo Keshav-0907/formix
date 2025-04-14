@@ -5,15 +5,15 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import StatCard from '@/components/dashboard/StatCard'
 import { Button } from '@/components/ui/button'
-import { useSession } from 'next-auth/react'
 import FormResponses from '@/components/dashboard/FormResponses'
 import { Download, ExternalLink, RotateCcw, Settings, Sparkles } from 'lucide-react'
 import FormSettings from '@/components/dashboard/FormSettings'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/hooks/useAuth'
 
 const SingleFormPage = () => {
   const { id } = useParams()
-  const { data: session } = useSession()
+  const {user}  = useAuth()
   const [reloadData, setReloadData] = useState(null)
   const router = useRouter()
 
@@ -35,8 +35,9 @@ const SingleFormPage = () => {
       try {
         const res = await axios.post('/api/forms/getResponses', {
           formId: id,
-          owner: session?.user?.email,
+          owner: user?._id,
         })
+        console.log('res', res.data)
         setResponseData(res.data)
       } catch (err) {
         console.error('Error fetching responses:', err)
@@ -45,17 +46,19 @@ const SingleFormPage = () => {
     if (reloadData) {
       setReloadData(null)
     }
-    if (id && session?.user?.email) {
+    if (id && user?.email) {
       getForm()
       getResponses()
     }
-  }, [id, session?.user?.email, reloadData])
+  }, [id, user?.email, reloadData])
 
   const goToForm = () => {
     window.open(`/${id}`, '_ blank')
   }
+
+  console.log('responseData', responseData)
   return (
-    <div className='p-5'>
+    <div className='p-5 bg-[#1D1E21] h-screen'>
       {form && (
         <div className='flex flex-col gap-5'>
           <div className='flex justify-between'>

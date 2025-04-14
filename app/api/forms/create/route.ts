@@ -1,11 +1,23 @@
 import { connectToDb } from "@/lib/connectToDb";
 import FormModel from "@/models/FormModel";
+import User from "@/models/UsersModel";
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
 
     await connectToDb();
+
+    const user = await User.findOne({ _id: data.owner });
+
+    if (!user) {
+      return new Response(
+        JSON.stringify({
+          message: "User not found",
+        }),
+        { status: 404 }
+      );
+    }
 
     const newForm = new FormModel({
       title: data.title || "Untitled Form",
@@ -19,6 +31,12 @@ export async function POST(request: Request) {
     });
 
     const savedForm = await newForm.save();
+
+    // @ts-ignore - Type 'string' is not assignable to type 'ObjectId'
+    user.forms = user.forms || [];
+    // @ts-ignore - Type 'string' is not assignable to type 'ObjectId'
+    user.forms.push(newForm._id);
+    await user.save();
 
     return new Response(
       JSON.stringify({

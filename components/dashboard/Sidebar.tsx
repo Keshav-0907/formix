@@ -36,7 +36,7 @@ const Sidebar = () => {
             </button>
 
             <button
-              onClick={() => router.push('/dashboard/forms')}
+              onClick={() => router.push('/dashboard/form')}
               className='text-sm flex items-center gap-1 cursor-pointer hover:bg-[#ebebeb] hover:text-[#1D1E21] py-2 px-1.5 w-full rounded-sm'
             >
               <FileCheck2 strokeWidth={2} size={16} />

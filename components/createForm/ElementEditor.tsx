@@ -184,7 +184,7 @@ const ElementEditor = () => {
   };
 
   return (
-    <div className='w-full h-full border-l flex flex-col justify-between p-2 relative' ref={editorRef}>
+    <div className='w-full h-full border-l flex flex-col justify-between p-2 relative bg-[#1D1E21]' ref={editorRef}>
       {
         form.activeElement ? (
           <>
@@ -200,7 +200,7 @@ const ElementEditor = () => {
             </div>
           </>
         ) : (
-          <div className='w-full h-full bg-[#000000] rounded-lg p-4 shadow-md flex flex-col gap-4 items-center justify-center'>
+          <div className='w-full h-full bg-[#1D1E21] rounded-lg p-4 shadow-md flex flex-col gap-4 items-center justify-center'>
             <div>
               <h1 className='text-white text-sm text-center'>No Active Element</h1>
               <p className='text-gray-400 text-xs text-center'>Select an element to edit its properties.</p>
