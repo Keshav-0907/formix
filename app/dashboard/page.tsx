@@ -15,9 +15,8 @@ const DashboardPage = () => {
   const {user} = useAuth()
   const router = useRouter()
 
-
   return (
-    <div className='p-5 flex flex-col gap-5 bg-[#1D1E21] h-full'>
+    <div className='p-5 flex flex-col gap-5 bg-[#1D1E21] h-full overflow-scroll'>
       <div className='flex justify-between items-center'>
         <div className='flex flex-col gap-1'>
           <div className='text-2xl font-bold text-[#F8F8F8]'>

@@ -11,8 +11,6 @@ const RecentForms = () => {
     const [recentForms, serRecetnForms] = useState([])
 
     useEffect(() => {
-        console.log('u', user)
-
         if(!user) return
         const getRecentForms = async () => {
             const res = await axios.post('/api/forms/getAll', {

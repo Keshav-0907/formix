@@ -44,7 +44,7 @@ interface FormState {
 // Initial state
 const initialState: FormState = {
   elements: [],
-  title: 'Untitled Form',
+  title: '',
   description: '',
   theme: 'light',
   isActive: false,
@@ -61,7 +61,6 @@ const formSlice = createSlice({
     deleteElement: (state, action: PayloadAction<string>) => {
       state.elements = state.elements.filter((el: Element) => el.id !== action.payload);
     },
-
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
@@ -94,10 +93,17 @@ const formSlice = createSlice({
       if (element) {
         element.required = !element.required;
       }
+    },
+    resetFormSlice: (state) => {
+      state.elements = [];
+      state.title = '';
+      state.description = '';
+      state.theme = 'light';
+      state.isActive = false;
+      state.activeElement = null;
     }
-
   },
 });
 
-export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement, deleteElement, toggleRequired } = formSlice.actions;
+export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement, deleteElement, toggleRequired, resetFormSlice} = formSlice.actions;
 export default formSlice.reducer;

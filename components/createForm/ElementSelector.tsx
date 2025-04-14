@@ -44,7 +44,6 @@ const FormElementItem: React.FC<FormElementItemProps> = ({
       ref={drag as any}
       className={`
         p-4 rounded-xl 
-        bg-white/5 dark:bg-[#1e293b] 
         border border-white/10 dark:border-zinc-800 
         shadow-md hover:shadow-lg transition-all
         flex items-start gap-4 cursor-grab

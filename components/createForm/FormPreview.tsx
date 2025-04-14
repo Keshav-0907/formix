@@ -48,7 +48,7 @@ const FormPreview = () => {
           />
           <input
             type="text"
-            placeholder='Form Description'
+            placeholder='Add Some Description'
             className='w-full text-gray-800 pb-2 border-b border-gray-300 focus:outline-none focus:border-blue-500 transition'
             value={form.description}
             onChange={(e) => updateFormDescription(e.target.value)}

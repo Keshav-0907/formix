@@ -10,15 +10,16 @@ import { ArrowRightIcon, Send } from "lucide-react";
 import { LineShadowText } from "@/components/magicui/line-shadow-text";
 import { useTheme } from "next-themes";
 import { Pointer } from "@/components/magicui/pointer";
-import { motion } from "framer-motion"; // ✅ Import Framer Motion
+import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const router = useRouter();
 
 
+  console.log('Loading')
   useEffect(() => {
     if (user) {
       router.push('/dashboard')

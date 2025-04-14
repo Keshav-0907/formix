@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     }
 
     const newForm = new FormModel({
-      title: data.title || "Untitled Form",
+      title: data.title || "",
       description: data.description || "",
       isActive: true,
       theme: data.theme || "light",

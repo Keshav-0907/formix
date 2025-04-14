@@ -32,7 +32,7 @@ const elementDataSchema = new Schema(
             required: true,
         },
         data: {
-            type: Schema.Types.Mixed, 
+            type: Schema.Types.Mixed,
             required: true,
         },
     },
@@ -43,13 +43,13 @@ const FormElementSchema = new Schema({
     id: { type: String, required: true },
     position: Number,
     type: {
-      type: String,
-      enum: ['input', 'textarea', 'heading', 'paragraph'],
-      required: true,
+        type: String,
+        enum: ['input', 'textarea', 'heading', 'paragraph', 'divider'],
+        required: true,
     },
     required: Boolean,
-    data: Schema.Types.Mixed, 
-  });
+    data: Schema.Types.Mixed,
+});
 
 const formSchema = new mongoose.Schema<IFormDocument>({
     title: { type: String, required: true },

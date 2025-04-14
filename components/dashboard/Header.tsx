@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '../ui/button'
 import { ArrowLeft } from 'lucide-react'
@@ -25,6 +25,7 @@ import {
 import confetti from 'canvas-confetti'
 import { useAuth } from '@/hooks/useAuth'
 import toast from 'react-hot-toast'
+import FormPublishedModal from '../createForm/FormPublishedModal'
 
 
 
@@ -33,6 +34,8 @@ const Header = () => {
   const pathname = usePathname()
   const router = useRouter()
   const { form, addFormElement, updateFormTitle, addActiveElement, updateFormDescription } = useForm();
+  const [showPublishedModal, setShowPublishedModal] = useState(false)
+  const [publisheedForm, setPublishedForm] = useState(null)
 
   const showFormTitle =
     pathname.includes('/dashboard/form/create')
@@ -49,6 +52,20 @@ const Header = () => {
     }
 
 
+    for (let element of form.elements) {
+      if (element.type === 'input' || element.type === 'textarea') {
+        const data = element.data as { heading?: string; placeholder?: string };
+        if (!data.heading) {
+          toast.error(`Missing heading in ${element.type} element`, {
+            style:{
+              fontSize: '14px',
+            }
+          });
+          return;
+        }
+      }
+    }
+
     const res = await axios.post('/api/forms/create', {
       title: form.title,
       description: form.description,
@@ -59,6 +76,7 @@ const Header = () => {
     })
 
     if (res.status === 200) {
+      setPublishedForm(res.data)
       confetti({
         particleCount: 100,
         spread: 70,
@@ -66,8 +84,7 @@ const Header = () => {
           y: 0.7
         }
       });
-      console.log('Form created successfully')
-      router.push('/dashboard')
+      setShowPublishedModal(true)
     }
   }
 
@@ -174,7 +191,7 @@ const Header = () => {
               <DropdownMenuLabel className="text-gray-300">Hi, {user?.name}</DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-[#2f2f2f]" />
               <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">Profile</DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer" onClick={()=>router.push('/dashboard/settings')}>Settings</DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer" onClick={() => router.push('/dashboard/settings')}>Settings</DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">Help</DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">
                 <div onClick={handleLogOut}>Sign Out</div>
@@ -182,11 +199,13 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-
-
-
-
       </div>
+
+      {
+        showPublishedModal && (
+          <FormPublishedModal setShowPublishedModal={setShowPublishedModal} publishedForm={publisheedForm}  />
+        )
+      }
     </div>
   )
 }

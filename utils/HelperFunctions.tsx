@@ -14,7 +14,15 @@ export const renderFormElement = (
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <div className="flex flex-col gap-1 w-full">
                         <div className="flex justify-between">
-                            <div className="text-sm font-semibold"> {(element.data as InputElement).heading || 'Add Heading'} </div>
+                            <input
+                                type="text"
+                                placeholder={'Add Heading'}
+                                required={element.required}
+                                value={(element.data as InputElement).heading || ''}
+                                disabled
+                                className="text-sm font-semibold placeholder:font-normal"
+
+                            />
                             <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
                         </div>
                         <input
@@ -34,7 +42,14 @@ export const renderFormElement = (
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <div className="flex flex-col gap-1 w-full">
                         <div className="flex justify-between">
-                            <div className="text-sm font-semibold"> {(element.data as TextAreaElement).heading || 'Add Text'} </div>
+                            <input
+                                type="text"
+                                placeholder={'Add Heading'}
+                                required={element.required}
+                                value={(element.data as TextAreaElement).heading || ''}
+                                disabled
+                                className="text-sm font-semibold placeholder:font-normal"
+                            />
                             <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
                         </div>
                         <textarea
