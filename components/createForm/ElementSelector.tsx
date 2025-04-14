@@ -32,7 +32,6 @@ const FormElementItem: React.FC<FormElementItemProps> = ({
           placeholder: `Enter ${type.toLowerCase()}`,
           required: false,
         };
-        // you might want to handle the element addition here
       }
     },
     collect: (monitor) => ({

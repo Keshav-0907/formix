@@ -13,19 +13,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from '../ui/separator'
+import { HeadingElement, InputElement, ParagraphElement, TextAreaElement } from '@/types'
 
 
 const ElementEditor = () => {
-  const { form, getSingleElement, discardActiveElement, updateElementProperty } = useForm();
+  const { form, getSingleElement, discardActiveElement, updateElementProperty, toggleIsRequired } = useForm();
   const element = getSingleElement(form.activeElement as unknown as string);
   const editorRef = useRef<HTMLDivElement>(null);
 
+
   const handleChange = (key: string, value: any) => {
     updateElementProperty({
-      ...element,
-      [key]: value
+      id: element.id,
+      data: { [key]: value }
     });
   };
+
+  const handleToggleRequired = (id) => {
+    toggleIsRequired(id);
+  }
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -53,22 +60,22 @@ const ElementEditor = () => {
               </div>
               {/* Label Input */}
               <div className="flex flex-col space-y-1">
-                <label className="text-sm font-medium text-gray-300">Label</label>
+                <label className="text-sm font-medium text-gray-300">Field Heading</label>
                 <input
                   type="text"
-                  value={element.heading}
+                  value={(element.data as InputElement).heading || 'Add Heading'}
                   onChange={(e) => handleChange('heading', e.target.value)}
                   className="bg-[#2A2A2A] border border-[#444] text-sm text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="Enter field label"
+                  placeholder="Enter field heading"
                 />
               </div>
 
               {/* Placeholder Input */}
               <div className="flex flex-col space-y-1">
-                <label className="text-sm font-medium text-gray-300">Placeholder</label>
+                <label className="text-sm font-medium text-gray-300">Field Placeholder</label>
                 <input
                   type="text"
-                  value={element.placeholder}
+                  value={(element.data as InputElement).placeholder}
                   onChange={(e) => handleChange('placeholder', e.target.value)}
                   className="bg-[#2A2A2A] border border-[#444] text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Enter placeholder text"
@@ -80,7 +87,7 @@ const ElementEditor = () => {
                 <label className="text-sm font-medium text-gray-300">Is this a required field ??</label>
                 <Switch
                   checked={element.required}
-                  onCheckedChange={(checked) => handleChange('required', checked)}
+                  onCheckedChange={() => handleToggleRequired(element.id)}
                   className="bg-gray-600 data-[state=checked]:bg-green-500"
                 />
               </div>
@@ -96,13 +103,13 @@ const ElementEditor = () => {
             </div>
             {/* Label Input */}
             <div className="flex flex-col space-y-1">
-              <label className="text-sm font-medium text-gray-300">Label</label>
+              <label className="text-sm font-medium text-gray-300">Text Area Heading</label>
               <input
                 type="text"
-                value={element.heading}
+                value={(element.data as TextAreaElement).heading}
                 onChange={(e) => handleChange('heading', e.target.value)}
                 className="bg-[#2A2A2A] border border-[#444] text-sm text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="Enter field label"
+                placeholder="Enter field heading"
               />
             </div>
 
@@ -111,7 +118,7 @@ const ElementEditor = () => {
               <label className="text-sm font-medium text-gray-300">Placeholder</label>
               <input
                 type="text"
-                value={element.placeholder}
+                value={(element.data as TextAreaElement).placeholder}
                 onChange={(e) => handleChange('placeholder', e.target.value)}
                 className="bg-[#2A2A2A] border border-[#444] text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 placeholder="Enter placeholder text"
@@ -123,7 +130,7 @@ const ElementEditor = () => {
               <label className="text-sm font-medium text-gray-300">Is this a required field ??</label>
               <Switch
                 checked={element.required}
-                onCheckedChange={(checked) => handleChange('required', checked)}
+                onCheckedChange={() => handleToggleRequired(element.id)}
                 className="bg-gray-600 data-[state=checked]:bg-green-500"
               />
             </div>
@@ -135,13 +142,13 @@ const ElementEditor = () => {
 
             <input
               type='text'
-              value={element.placeholder || ''}
-              onChange={(e) => handleChange('placeholder', e.target.value)}
+              value={(element.data as HeadingElement).heading}
+              onChange={(e) => handleChange('heading', e.target.value)}
               className="bg-[#2A2A2A] border border-[#444] text-sm text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="Enter field label"
             />
             <select
-              value={(element.level ?? 'h1') as string}
+              value={(element.data as HeadingElement).level || 'h1'}
               onChange={(e) => handleChange('level', e.target.value)}
               className='p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-[#2A2A2A] border border-[#444] text-sm text-white'
             >
@@ -161,7 +168,9 @@ const ElementEditor = () => {
               ✏️ Add Paragraph
             </div>
             <textarea
-              value={element.content || ''}
+              value={(element.data as ParagraphElement).content}
+              placeholder='Add content'
+              rows={4}
               onChange={(e) => handleChange('content', e.target.value)}
               className='border-[1px] outline-no p-2 rounded w-full text-white'
             />

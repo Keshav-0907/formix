@@ -1,13 +1,14 @@
 'use client'
 import { useSelector, useDispatch } from "react-redux";
-import { addElement, setTitle, setActiveElement, removeActiveElement, setDescription, modifyElement, deleteElement } from "@/store/slice/formSlice";
+import { addElement, setTitle, setActiveElement, removeActiveElement, setDescription, modifyElement, deleteElement, toggleRequired, Element } from "@/store/slice/formSlice";
 import { RootState } from "@/store/store";
+import { FormElement, HeadingElement, InputElement, ParagraphElement, TextAreaElement } from "@/types";
 
 const useForm = () => {
   const dispatch = useDispatch();
   const form = useSelector((state: RootState) => state.form);
 
-  const addFormElement = (element: any) => {
+  const addFormElement = (element : Element ) => {
     dispatch(addElement(element));
   };
 
@@ -34,13 +35,22 @@ const useForm = () => {
   const updateFormDescription = (description: string) => {
     dispatch(setDescription(description));
   };
-
-  const updateElementProperty = ({ id, ...rest }: any) => {
-    console.log("Updating element with ID:", id, "with properties:", rest);
-    dispatch(modifyElement({ id, ...rest }));
+  const updateElementProperty = ({
+    id,
+    data,
+  }: {
+    id: string;
+    data: Partial<InputElement | TextAreaElement | HeadingElement | ParagraphElement>;
+  }) => {
+    dispatch(modifyElement({ id, data: data as Partial<Element> }));
   };
 
-  return { form, addFormElement, updateFormTitle, addActiveElement, setActiveElement, getSingleElement, discardActiveElement, updateFormDescription, updateElementProperty, removeFormElement };
+  const toggleIsRequired = (id: string) => {
+    dispatch(toggleRequired(id));
+  };
+
+
+  return { form, addFormElement, updateFormTitle, addActiveElement, setActiveElement, getSingleElement, discardActiveElement, updateFormDescription, updateElementProperty, removeFormElement, toggleIsRequired };
 };
 
 export default useForm;

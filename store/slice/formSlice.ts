@@ -1,37 +1,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
-interface Heading {
+interface HeadingElement {
   placeholder: string;
   level: string;
 }
 
-interface Paragraph {
+interface ParagraphElement {
   placeholder: string;
 }
 
-interface Input {
+interface InputElement {
   placeholder: string;
   required: boolean;
   label: string;
 }
 
-interface TextArea {
+interface TextAreaElement {
   placeholder: string;
   required: boolean;
   label: string;
 }
 
 // Define the type for an element
-interface Element {
-  level: string;
-  heading: string | number | readonly string[];
+export interface Element {
   id: string;
-  position: number;
+  position?: number;
   type: string;
-  placeholder: string;
-  required: boolean;
-  style: Heading | Paragraph | Input | TextArea;
+  required?: boolean;
+  data: InputElement | TextAreaElement | HeadingElement | ParagraphElement;
 }
 
 // Define the slice state type
@@ -64,7 +61,7 @@ const formSlice = createSlice({
     deleteElement: (state, action: PayloadAction<string>) => {
       state.elements = state.elements.filter((el: Element) => el.id !== action.payload);
     },
-    
+
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
@@ -77,15 +74,30 @@ const formSlice = createSlice({
     removeActiveElement: (state) => {
       state.activeElement = null;
     },
-    modifyElement: (state, action: PayloadAction<{ id: string, [key: string]: any }>) => {
-      const index = state.elements.findIndex((el: Element) => el.id === action.payload.id);
-      console.log('action', action)
+    modifyElement: (
+      state,
+      action: PayloadAction<{
+        id: string;
+        data: Partial<InputElement | TextAreaElement | HeadingElement | ParagraphElement>;
+      }>
+    ) => {
+      const index = state.elements.findIndex((el) => el.id === action.payload.id);
       if (index !== -1) {
-        state.elements[index] = { ...state.elements[index], ...action.payload };
+        state.elements[index].data = {
+          ...state.elements[index].data,
+          ...action.payload.data,
+        };
+      }
+    },
+    toggleRequired: (state, action: PayloadAction<string>) => {
+      const element = state.elements.find((el) => el.id === action.payload);
+      if (element) {
+        element.required = !element.required;
       }
     }
+
   },
 });
 
-export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement, deleteElement } = formSlice.actions;
+export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement, deleteElement, toggleRequired } = formSlice.actions;
 export default formSlice.reducer;

@@ -1,9 +1,9 @@
-import { FormElement } from "@/types";
+import { FormElement, HeadingElement, InputElement, ParagraphElement, TextAreaElement } from "@/types";
 import { GripVertical } from "lucide-react";
 import React from "react";
 
 export const renderFormElement = (
-    element: any,
+    element: FormElement,
     mode: 'preview' | 'edit',
     value?: string,
     onChange?: (val: string) => void) => {
@@ -14,12 +14,12 @@ export const renderFormElement = (
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <div className="flex flex-col gap-1 w-full">
                         <div className="flex justify-between">
-                            <div className="text-sm font-semibold"> {element.heading} </div>
+                            <div className="text-sm font-semibold"> {(element.data as InputElement).heading || 'Add Heading'} </div>
                             <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
                         </div>
                         <input
                             type="text"
-                            placeholder={element.placeholder}
+                            placeholder={(element.data as InputElement).placeholder || 'Add Placeholder'}   
                             required={element.required}
                             value={value || ''}
                             onChange={(e) => onChange?.(e.target.value)}
@@ -35,13 +35,12 @@ export const renderFormElement = (
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <div className="flex flex-col gap-1 w-full">
                         <div className="flex justify-between">
-                            <div className="text-sm font-semibold"> {element.heading} </div>
+                            <div className="text-sm font-semibold"> {(element.data as TextAreaElement).heading || 'Add Text Area Heading'} </div>
                             <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
                         </div>
                         <textarea
-                            placeholder={element.placeholder}
+                            placeholder={(element.data as TextAreaElement).placeholder || 'Add Placeholder'}
                             required={element.required}
-                            value={value || ''}
                             onChange={(e) => onChange?.(e.target.value)}
                             className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md resize-none"
                             rows={4}
@@ -52,7 +51,7 @@ export const renderFormElement = (
             );
         case 'heading':
             const headingStyle = () => {
-                switch (element.level as string) {
+                switch ((element.data as HeadingElement).level) {
                     case 'h1':
                         return 'text-4xl font-bold';
                     case 'h2':
@@ -72,7 +71,7 @@ export const renderFormElement = (
             return (
                 <div className='flex items-center gap-2 hover:bg-blue-50 p-2 rounded-md transition-all'>
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
-                    <div className={`${headingStyle()}`}>{element.placeholder}</div>
+                    <div className={`${headingStyle()}`}>{(element.data as HeadingElement).heading || 'This is a heading'}</div>
                 </div>
             );
         case 'paragraph':
@@ -81,7 +80,7 @@ export const renderFormElement = (
                    <div className="flex items-center">
                    {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                    </div>
-                    <p className="text-gray-600 placeholder:text-sm">{element.content ? element.content : "Add Content"}</p>
+                    <p className="text-gray-600 placeholder:text-sm">{(element.data as ParagraphElement).content || 'Add paragraph content here'}</p>
                 </div>
             );
         case 'divider':

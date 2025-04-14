@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import useForm from '@/hooks/useForm';
-import { GripVertical, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { renderFormElement } from '@/utils/HelperFunctions';
 
 
@@ -20,11 +20,12 @@ const FormPreview = () => {
       const newElement = {
         id: `element-${Date.now()}`,
         type: item.type,
-        heading: item.type === "input" || "textarea" ? `Add a Heading to this field` : undefined,
-        level: item.type === "heading" ? "h2" : undefined,
-        placeholder: `Enter ${item.type.toLowerCase()}`,
         required: false,
         position: form.elements.length,
+        data: {
+          placeholder: `Enter ${item.type.toLowerCase()}`,
+          heading: '',
+        },
       };
       addFormElement(newElement);
     },
