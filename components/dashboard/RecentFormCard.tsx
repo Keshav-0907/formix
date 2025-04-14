@@ -24,12 +24,7 @@ const RecentFormCard = ({ form, index }) => {
                 <div className='flex flex-col gap-1 w-full'>
                     <div className='flex items-center justify-between gap-4'>
                         <div className='font-semibold text-base'>{form.title}</div>
-                        <ChevronDown
-                            className={clsx(
-                                'w-5 h-5 transition-transform duration-300',
-                                expanded ? 'rotate-180' : 'rotate-0'
-                            )}
-                        />
+
                     </div>
                     <div className='text-xs text-gray-500 flex items-center gap-2'>
                         <span>{formatDateAndTime(form.createdAt, true)}</span>
@@ -44,15 +39,24 @@ const RecentFormCard = ({ form, index }) => {
                 </div>
 
                 {/* Right Section */}
-                <div className='flex gap-4 text-xs items-center ml-4'>
-                    <div className='flex gap-1 items-center'>
-                        <CheckCheck className='w-4 h-4 text-green-500' strokeWidth={1.5} />
-                        {form.responses?.length || 0}
+
+                <div className='flex flex-col gap-2 items-end'>
+                    <div className='flex gap-4 text-xs items-center ml-4'>
+                        <div className='flex gap-1 items-center'>
+                            <CheckCheck className='w-4 h-4 text-green-500' strokeWidth={1.5} />
+                            {form.responses?.length || 0}
+                        </div>
+                        <div className='flex gap-1 items-center'>
+                            <Eye className='w-4 h-4' strokeWidth={1.5} />
+                            {form.views || 0}
+                        </div>
                     </div>
-                    <div className='flex gap-1 items-center'>
-                        <Eye className='w-4 h-4' strokeWidth={1.5} />
-                        {form.views || 0}
-                    </div>
+                    <ChevronDown
+                        className={clsx(
+                            'w-5 h-5 transition-transform duration-300',
+                            expanded ? 'rotate-180' : 'rotate-0'
+                        )}
+                    />
                 </div>
             </div>
 
@@ -80,7 +84,7 @@ const RecentFormCard = ({ form, index }) => {
                         )}
                     </div>
                     <div className='mt-4 text-right'>
-                        <Link href={`/${form._id}`} className='text-blue-600 underline text-sm'>
+                        <Link href={`/dashboard/form/${form._id}`} className='text-blue-600 underline text-sm'>
                             Go to Form &rarr;
                         </Link>
                     </div>

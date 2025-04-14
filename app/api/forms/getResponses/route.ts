@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         .filter((element: any) => element.type === "input" || element.type === "textarea")
         .map((element: any) => ({
             id: element.id,
-            placeholder: element.placeholder
+            header: element.data.heading
         }));
 
     const responses = await ResponseModel.find({ formId });

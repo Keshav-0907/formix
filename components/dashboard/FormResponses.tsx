@@ -13,7 +13,7 @@ import { ArrowUp, ArrowDown } from 'lucide-react'
 
 type RawHeader = {
   id: string
-  placeholder: string
+  header: string
 }
 
 type RawResponse = {
@@ -30,6 +30,7 @@ type Props = {
 const FormResponses: React.FC<Props> = ({ headers, responses }) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
+  console.log('headers', headers)
   console.log('responses', responses)
 
   const columns = useMemo<ColumnDef<Record<string, string>>[]>(() => {
@@ -45,12 +46,12 @@ const FormResponses: React.FC<Props> = ({ headers, responses }) => {
         cell: info => new Date(info.getValue() as string).toLocaleDateString(), // Format date
       },
       ...headers.map(header => ({
-        accessorKey: header.placeholder,
-        header: header.placeholder,
+        accessorKey: header.id,
+        header: header.header,
       })),
      
     ]
-  }, [headers])
+  }, [headers])  
   
   const data = useMemo<Record<string, string>[]>(() => {
     return responses.map((res, index) => {
@@ -59,12 +60,12 @@ const FormResponses: React.FC<Props> = ({ headers, responses }) => {
         createdAt: res.createdAt,
       }
       res.response.forEach(ans => {
-        const headerLabel = headers.find(h => h.id === ans.id)?.placeholder || ans.id
-        flatRow[headerLabel] = ans.response
+        flatRow[ans.id] = ans.response
       })
       return flatRow
     })
-  }, [responses, headers])
+  }, [responses])
+  
   
 
   const table = useReactTable({
@@ -77,6 +78,8 @@ const FormResponses: React.FC<Props> = ({ headers, responses }) => {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   })
+
+  console.log('table.getRowModel().rows', table.getRowModel().rows)
 
   return (
     <div className="py-6 w-full mx-auto">

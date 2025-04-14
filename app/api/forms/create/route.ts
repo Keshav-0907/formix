@@ -8,12 +8,14 @@ export async function POST(request: Request) {
     await connectToDb();
 
     const newForm = new FormModel({
-      title: data.title,
-      description: data.description,
+      title: data.title || "Untitled Form",
+      description: data.description || "",
       isActive: true,
-      theme: data.theme,
-      elements: data.elements,
+      theme: data.theme || "light",
+      background: data.background || "",
+      elements: data.elements || [],
       owner: data.owner,
+      responses: data.responses || [],
     });
 
     const savedForm = await newForm.save();
@@ -30,7 +32,7 @@ export async function POST(request: Request) {
     return new Response(
       JSON.stringify({
         message: "Form submission failed",
-        error: error instanceof Error ? error.message : error,
+        error: error instanceof Error ? error.message : "Unknown error",
       }),
       { status: 500 }
     );

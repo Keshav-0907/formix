@@ -10,7 +10,7 @@ export const renderFormElement = (
     switch (element.type) {
         case 'input':
             return (
-                <div className='flex items-center gap-2 hover:bg-blue-50 p-2 rounded-md transition-all'>
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <div className="flex flex-col gap-1 w-full">
                         <div className="flex justify-between">
@@ -19,23 +19,22 @@ export const renderFormElement = (
                         </div>
                         <input
                             type="text"
-                            placeholder={(element.data as InputElement).placeholder || 'Add Placeholder'}   
+                            placeholder={(element.data as InputElement).placeholder || 'Add Placeholder'}
                             required={element.required}
                             value={value || ''}
                             onChange={(e) => onChange?.(e.target.value)}
                             className="px-2 py-1 text-sm border border-gray-300 rounded-md w-full"
                         />
                     </div>
-
                 </div>
             );
         case 'textarea':
             return (
-                <div className='flex items-center gap-2 hover:bg-blue-50 p-2 rounded-md transition-all'>
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <div className="flex flex-col gap-1 w-full">
                         <div className="flex justify-between">
-                            <div className="text-sm font-semibold"> {(element.data as TextAreaElement).heading || 'Add Text Area Heading'} </div>
+                            <div className="text-sm font-semibold"> {(element.data as TextAreaElement).heading || 'Add Text'} </div>
                             <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
                         </div>
                         <textarea
@@ -69,23 +68,23 @@ export const renderFormElement = (
                 }
             };
             return (
-                <div className='flex items-center gap-2 hover:bg-blue-50 p-2 rounded-md transition-all'>
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <div className={`${headingStyle()}`}>{(element.data as HeadingElement).heading || 'This is a heading'}</div>
                 </div>
             );
         case 'paragraph':
             return (
-                <div className='flex items-center gap-2 p-2 bgr'>
-                   <div className="flex items-center">
-                   {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
-                   </div>
-                    <p className="text-gray-600 placeholder:text-sm">{(element.data as ParagraphElement).content || 'Add paragraph content here'}</p>
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
+                    <div className="flex items-center">
+                        {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
+                    </div>
+                    <p className="text-gray-600 placeholder:text-sm">{(element.data as ParagraphElement).content || 'Add paragraph content'}</p>
                 </div>
             );
         case 'divider':
             return (
-                <div className='flex items-center gap-2 p-2'>
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <hr className="flex-1 border-t border-gray-300" />
                 </div>

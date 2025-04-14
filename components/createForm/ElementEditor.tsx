@@ -63,7 +63,7 @@ const ElementEditor = () => {
                 <label className="text-sm font-medium text-gray-300">Field Heading</label>
                 <input
                   type="text"
-                  value={(element.data as InputElement).heading || 'Add Heading'}
+                  value={(element.data as InputElement).heading}
                   onChange={(e) => handleChange('heading', e.target.value)}
                   className="bg-[#2A2A2A] border border-[#444] text-sm text-white rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Enter field heading"

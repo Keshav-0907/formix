@@ -14,7 +14,6 @@ const PublicForm = () => {
 
 
   useEffect(() => {
-
     const getForm = async () => {
       const res = await axios.post('/api/forms/getForm', {
         id: formId
@@ -48,13 +47,15 @@ const PublicForm = () => {
     )
   }
 
+  console.log(form)
+
 
   return (
-    <div className='bg-[#F8F8F8] h-screen flex justify-center py-5'>
+    <div className='bg-[#1D1E21] h-screen flex justify-center py-5'>
       <div className='w-1/2 h-full border-2 border-[#E0E0E0] bg-white rounded-lg shadow-lg flex flex-col px-4 relative'>
         <div className='py-4'>
-          <div className='text-2xl font-semibold'>{form.title}</div>
-          <div className='text-sm text-[#434343]'>{form.description}</div>
+          <div className='text-2xl font-semibold'>{form?.title}</div>
+          <div className='text-sm text-[#434343]'>{form?.description}</div>
         </div>
         <div className='py-4'>
           {
@@ -81,17 +82,17 @@ const PublicForm = () => {
           }
         </div>
 
-        <div className='absolute bottom-0 left-0 right-0'>
+        <div className='absolute bottom-1 left-1 right-1'>
           <div className='p-2'>
             <button
               onClick={handleSubmit}
-              className='bg-black text-white text-sm py-2 px-4 rounded-md mt-4'
+              className='bg-black text-white text-sm py-2 px-4 rounded-md mt-4 cursor-pointer'
             >
               Submit
             </button>
 
           </div>
-          <div className='bg-white border-t border-[#E0E0E0] text-xs px-2 py-1'> Powered by Keshav </div>
+          <div className='bg-white border-t border-[#E0E0E0] text-xs px-2 py-1'> Powered by Formix </div>
         </div>
       </div>
     </div>
