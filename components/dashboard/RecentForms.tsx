@@ -32,7 +32,7 @@ const RecentForms = () => {
                     recentForms.length > 0 ? (
                         <div className='flex flex-col gap-2'>
                             {recentForms.map((form, index) => (
-                                <RecentFormCard form={form} index={index} />
+                                <RecentFormCard form={form} key={index} />
                             ))}
                         </div>
                     ) : (

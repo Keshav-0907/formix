@@ -5,7 +5,7 @@ import { CheckCheck, Eye } from 'lucide-react'
 import React from 'react'
 import { useRouter } from 'next/navigation'
 
-const RecentFormCard = ({ form, index }) => {
+const RecentFormCard = ({ form }) => {
   const router = useRouter()
 
   const handleNavigation = () => {
@@ -14,7 +14,6 @@ const RecentFormCard = ({ form, index }) => {
 
   return (
     <div
-      key={index}
       className="w-full bg-[#1a1a1a] px-6 py-4 rounded-lg text-sm cursor-pointer hover:bg-[#2a2a2a] transition-all duration-300 text-white border border-[#2f2f2f]"
       onClick={handleNavigation}
     >

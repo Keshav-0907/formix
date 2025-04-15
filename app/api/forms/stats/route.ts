@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
 
   const latestForm = user.forms[user.forms.length - 1];
 
-  return new Response(JSON.stringify({ totalForms, latestForm }), {
-    status: 200,
-  });
+  return Response.json({
+    totalForms,
+    latestForm
+  })
 }
