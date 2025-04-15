@@ -36,11 +36,13 @@ const Header = () => {
   const { form, addFormElement, updateFormTitle, addActiveElement, updateFormDescription } = useForm();
   const [showPublishedModal, setShowPublishedModal] = useState(false)
   const [publisheedForm, setPublishedForm] = useState(null)
+  const [saveLoading, setSaveLoading] = useState(false)
 
   const showFormTitle =
     pathname.includes('/dashboard/form/create')
 
   const handleFormSave = async () => {
+    setSaveLoading(true)
     if (!user) {
       console.log('No session found')
       return
@@ -85,6 +87,7 @@ const Header = () => {
         }
       });
       setShowPublishedModal(true)
+      setSaveLoading(false)
     }
   }
 
@@ -168,7 +171,7 @@ const Header = () => {
                 Preview
               </Button> */}
               <Button onClick={handleFormSave} className='bg-white text-black hover:bg-white/80'>
-                Save
+                {saveLoading ? 'Saving...' : 'Save'}
               </Button>
             </div>
           )

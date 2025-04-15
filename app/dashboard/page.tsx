@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { use, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import StatCard from '@/components/dashboard/StatCard'
@@ -7,13 +7,34 @@ import RecentForms from '@/components/dashboard/RecentForms'
 import { CheckCheck, File, Sparkles } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
+import axios from 'axios'
 
 
 
 const DashboardPage = () => {
 
-  const {user} = useAuth()
+  const { user, loading } = useAuth()
   const router = useRouter()
+  const [stats, setStats] = React.useState<any>(null)
+
+  useEffect(() => {
+    if (!user) return;
+  
+    const fetchStats = async () => {
+      try {
+        const res = await axios.post(`/api/forms/stats`, {
+          userId: user._id
+        });
+        setStats(res.data);
+      } catch (error) {
+        console.error('Failed to fetch stats:', error);
+      }
+    };
+  
+    fetchStats();
+  }, [user]);
+  
+  console.log('stats', stats, loading)
 
   return (
     <div className='p-5 flex flex-col gap-5 bg-[#1D1E21] h-full overflow-scroll'>
@@ -37,8 +58,8 @@ const DashboardPage = () => {
       </div>
 
       <div className='flex justify-between gap-5'>
-        <StatCard title={'Total Forms'} description={'This is the description'} icon={<File strokeWidth={1.4} />} value={5}/>
-        <StatCard title={'Responses in the latest form'} description={'2 Responses today'} icon={<CheckCheck strokeWidth={1.4} />} value={20}/>
+        <StatCard loading={loading} title={'Total Forms'} description={'This is the description'} icon={<File strokeWidth={1.4} />} value={stats?.totalForms ? stats?.totalForms : 0} />
+        <StatCard loading={loading}  title={'Responses in the latest form'} description={stats?.latestForm.title} icon={<CheckCheck strokeWidth={1.4} />} value={stats?.latestForm.responses.length ? stats?.latestForm.responses.length : 0} />
       </div>
 
 

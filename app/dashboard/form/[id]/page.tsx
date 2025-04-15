@@ -109,7 +109,7 @@ const SingleFormPage = () => {
           </div>
           {
             showFormSettings && (
-              <FormSettings setShowFormSettings={setShowFormSettings} />
+              <FormSettings setShowFormSettings={setShowFormSettings} formId={form._id} />
             )
           }
         </div>
