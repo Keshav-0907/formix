@@ -22,8 +22,7 @@ export async function DELETE(req: NextRequest) {
       return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
     }
 
-    const url = new URL(req.url);
-    const formId = url.searchParams.get("formId");
+    const {formId} = await req.json()
 
     if (!formId || !mongoose.Types.ObjectId.isValid(formId)) {
       return new Response(JSON.stringify({ error: "Invalid or missing formId" }), { status: 400 });

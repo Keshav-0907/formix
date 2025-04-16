@@ -14,16 +14,28 @@ export const renderFormElement = (
                     {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
                     <div className="flex flex-col gap-1 w-full">
                         <div className="flex justify-between">
-                            <input
-                                type="text"
-                                placeholder={'Add Heading'}
-                                required={element.required}
-                                value={(element.data as InputElement).heading || ''}
-                                disabled
-                                className="text-sm font-semibold placeholder:font-normal"
+                            {
+                                mode === 'edit' ? (
+                                    <div className="flex flex-col gap-1 w-full">
+                                        <input
+                                            type="text"
+                                            placeholder={'Add Heading'}
+                                            required={element.required}
+                                            value={(element.data as InputElement).heading || ''}
+                                            disabled
+                                            className="text-sm font-semibold placeholder:font-normal w-full"
 
-                            />
-                            <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
+                                        />
+                                        <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
+                                    </div>
+                                ) : (
+                                    <div className="text-sm font-semibold flex gap-1">
+                                        <span>{(element.data as InputElement).heading} </span>
+                                        <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> * </div>)} </div>
+                                    </div>
+                                )
+                            }
+
                         </div>
                         <input
                             type="text"
@@ -48,7 +60,7 @@ export const renderFormElement = (
                                 required={element.required}
                                 value={(element.data as TextAreaElement).heading || ''}
                                 disabled
-                                className="text-sm font-semibold placeholder:font-normal"
+                                className="text-sm font-semibold placeholder:font-normal w-full"
                             />
                             <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
                         </div>

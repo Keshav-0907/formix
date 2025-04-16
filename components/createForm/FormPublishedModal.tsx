@@ -65,12 +65,12 @@ const FormPublishedModal = ({ setShowPublishedModal, publishedForm }) => {
           {/* Link with copy button */}
           <div className="bg-[#2b2b2b] rounded-lg p-3 flex items-center justify-between mb-4">
             <span className="text-sm break-all">{link}</span>
-            <button onClick={copyToClipboard}>
+            <button onClick={copyToClipboard} className='cursor-pointer'>
               <Copy className="h-5 w-5 text-gray-300 hover:text-white" />
             </button>
           </div>
 
-          <Button onClick={() => setShowPublishedModal(false)} className="w-full bg-[#3b3b3b] hover:bg-[#4b4b4b] text-white">
+          <Button onClick={handleClose} className="w-full bg-[#3b3b3b] hover:bg-[#4b4b4b] text-white">
             Close
           </Button>
         </div>

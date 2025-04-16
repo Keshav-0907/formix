@@ -130,7 +130,7 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative w-full max-w-7xl rounded-xl overflow-hidden shadow-xl z-10 border-2 border-[#4B4B4B] p-2"
+          className="relative w-full max-w-7xl md:rounded-xl rounded-md overflow-hidden shadow-xl z-10 border-2 border-[#4B4B4B] md:p-2 p-1"
         >
           <video
             src="/DemoVideo.mp4"

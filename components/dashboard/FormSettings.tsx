@@ -1,27 +1,26 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { X } from 'lucide-react'
 import { Switch } from '../ui/switch'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
-const FormSettings = ({ setShowFormSettings, formId }) => {
+const FormSettings = ({ setShowFormSettings, form }) => {
   const router = useRouter()
+  const [isActive, setIsActive] = useState(form.isActive) 
 
-  const handleBackdropClick = () => {
-    setShowFormSettings(false)
-  }
+  const handleBackdropClick = () => setShowFormSettings(false)
 
-  const handleContentClick = (e) => {
-    e.stopPropagation()
-  }
+  const handleContentClick = (e) => e.stopPropagation()
 
   const handleFormDelete = async () => {
     try {
+      const token = localStorage.getItem('authToken')
       const res = await axios.delete('/api/forms/deleteForm', {
-        data: { formId },
+        data: { formId: form._id },
+        headers: { Authorization: `Bearer ${token}` },
       })
 
       if (res.status === 200) {
@@ -33,6 +32,27 @@ const FormSettings = ({ setShowFormSettings, formId }) => {
     } catch (error) {
       toast.error('Something went wrong')
       console.error('Delete error:', error)
+    }
+  }
+
+  const handleFormActiveToggle = async (checked) => {
+    const token = localStorage.getItem('authToken')
+    setIsActive(checked)
+    try {
+      const res = await axios.patch('/api/forms/editForm', {
+        formId: form._id,
+        isActive: checked,
+      }, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (res.status === 200) {
+        toast.success(`Form ${checked ? 'activated' : 'deactivated'}`)
+        setIsActive(res.data.isActive)
+      }
+
+    } catch (error) {
+      toast.error('Toggle failed')
+      console.error('Toggle error:', error)
     }
   }
 
@@ -53,10 +73,10 @@ const FormSettings = ({ setShowFormSettings, formId }) => {
         <div className="flex justify-between">
           <div className="text-sm text-slate-400">Status</div>
           <div className="flex items-center gap-1">
-            <div className="text-xs">Unactive</div>
+            <div className="text-xs">Inactive</div>
             <Switch
-              checked={true}
-              onCheckedChange={(e) => console.log(e)}
+              checked={isActive}
+              onCheckedChange={handleFormActiveToggle}
               className="bg-gray-600 data-[state=checked]:bg-green-500"
             />
             <div className="text-xs">Active</div>
@@ -67,7 +87,7 @@ const FormSettings = ({ setShowFormSettings, formId }) => {
           <div className="text-sm text-slate-400">Delete Form</div>
           <button
             onClick={handleFormDelete}
-            className="w-full text-white bg-[#bd4747] border-[1px] border-[#b11919] py-2 rounded-md text-sm font-medium hover:bg-[#b11919]/70 transition-all duration-200 ease-in-out flex items-center justify-center gap-2"
+            className="w-full text-white bg-[#bd4747] border-[1px] border-[#b11919] py-2 cursor-pointer rounded-md text-sm font-medium hover:bg-[#b11919]/70 transition-all duration-200 ease-in-out flex items-center justify-center gap-2"
           >
             Delete Form
           </button>

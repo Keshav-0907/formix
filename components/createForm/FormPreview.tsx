@@ -73,7 +73,6 @@ const FormPreview = () => {
                   className="transition cursor-pointer relative flex w-full gap-1 items-center"
 
                 >
-
                   <div onClick={() => addActiveElement(element)} className='w-full'>
                     {renderFormElement(element, 'edit')}
                   </div>

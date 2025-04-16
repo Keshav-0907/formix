@@ -14,16 +14,16 @@ const RecentFormCard = ({ form }) => {
 
   return (
     <div
-      className="w-full bg-[#1a1a1a] px-6 py-4 rounded-lg text-sm cursor-pointer hover:bg-[#2a2a2a] transition-all duration-300 text-white border border-[#2f2f2f]"
+      className="w-full bg-[#1a1a1a] px-4 py-2 md:px-6 md:py-4 rounded-lg text-sm cursor-pointer hover:bg-[#2a2a2a] transition-all duration-300 text-white border border-[#2f2f2f]"
       onClick={handleNavigation}
     >
       <div className="flex justify-between items-center">
         {/* Left Section */}
         <div className="flex flex-col gap-1 w-full">
           <div className="flex items-center justify-between gap-4">
-            <div className="font-semibold text-base">{form.title}</div>
+            <div className="font-semibold md:text-base text-sm">{form.title}</div>
           </div>
-          <div className="text-xs text-gray-400 flex items-center gap-2">
+          <div className="text-xs text-gray-400 flex gap-2 md:flex-row flex-col md:items-start items-start">
             <span>{formatDateAndTime(form.createdAt, true)}</span>
             <span>
               {form.isActive ? (
