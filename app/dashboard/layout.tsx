@@ -28,7 +28,8 @@ export default function DashboardLayout({
 
   if (loading || !user) {
     return (
-      <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-full h-screen bg-[#0F0F0F] flex items-center justify-center flex-col gap-4 text-white">
+        <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
         <p className="text-lg font-semibold">Loading dashboard...</p>
       </div>
     )

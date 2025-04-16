@@ -12,6 +12,7 @@ import { useAuth } from '@/hooks/useAuth'
 import Image from 'next/image'
 import { Separator } from '@/components/ui/separator'
 import toast from 'react-hot-toast'
+import { Badge } from '@/components/ui/badge'
 
 const SingleFormPage = () => {
   const { id } = useParams()
@@ -21,7 +22,7 @@ const SingleFormPage = () => {
 
   const [responseData, setResponseData] = useState<any>(null)
   const [showFormSettings, setShowFormSettings] = useState(false)
-  
+
 
   useEffect(() => {
     setFormLoading(true)
@@ -45,7 +46,7 @@ const SingleFormPage = () => {
       setFormLoading(false)
     }
 
-  }, [id, user, reloadData ,showFormSettings])
+  }, [id, user, reloadData, showFormSettings])
 
   const goToForm = () => {
     window.open(`/${id}`, '_ blank')
@@ -79,13 +80,13 @@ const SingleFormPage = () => {
                   <div>
                     {
                       responseData.isActive ? (
-                        <div className='text-white bg-green-600 text-xs px-2 py-1 rounded-full flex items-center gap-1'>
+                        <Badge variant="outline" className="ml-2 text-green-500 border-green-500">
                           Active
-                        </div>
+                        </Badge>
                       ) : (
-                        <div className='text-white bg-red-800 text-xs px-2 py-1 rounded-full flex items-center gap-1'>
-                          Unactive
-                        </div>
+                        <Badge variant="outline" className="ml-2 text-red-500 border-red-500">
+                          Inactive
+                        </Badge>
                       )
                     }
                   </div>
