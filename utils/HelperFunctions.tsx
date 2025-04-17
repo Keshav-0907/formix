@@ -16,7 +16,7 @@ export const renderFormElement = (
                         <div className="flex justify-between">
                             {
                                 mode === 'edit' ? (
-                                    <div className="flex flex-col gap-1 w-full">
+                                    <div className="flex justify-between w-full">
                                         <input
                                             type="text"
                                             placeholder={'Add Heading'}
@@ -87,9 +87,9 @@ export const renderFormElement = (
                     case 'h4':
                         return 'text-xl font-normal';
                     case 'h5':
-                        return 'text-lg font-light';
+                        return 'text-base';
                     case 'h6':
-                        return 'text-base font-thin';
+                        return 'text-sm';
                     default:
                         return 'text-base font-normal';
                 }

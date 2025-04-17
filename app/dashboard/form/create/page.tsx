@@ -2,9 +2,14 @@
 import ElementEditor from '@/components/createForm/ElementEditor'
 import ElementSelector from '@/components/createForm/ElementSelector'
 import FormPreview from '@/components/createForm/FormPreview'
+import useForm from '@/hooks/useForm'
 import React, { useState } from 'react'
 
 const CreateNewForm = () => {
+
+  const {form} = useForm()
+
+  console.log(form)
 
   return (
     <div className="flex">

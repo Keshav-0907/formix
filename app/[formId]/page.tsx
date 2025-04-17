@@ -45,7 +45,7 @@ const PublicForm = () => {
   }
 
 
-  if(!form?.isActive) {
+  if(!form?.isActive && !loading) {
     return (
       <div className='fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center px-4'>
       <motion.div

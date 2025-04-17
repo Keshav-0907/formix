@@ -13,6 +13,7 @@ import Image from 'next/image'
 import { Separator } from '@/components/ui/separator'
 import toast from 'react-hot-toast'
 import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const SingleFormPage = () => {
   const { id } = useParams()

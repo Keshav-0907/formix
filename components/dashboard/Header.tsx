@@ -75,7 +75,7 @@ const Header = () => {
       title: form.title,
       description: form.description,
       elements: form.elements,
-      isActive: form.isActive,
+      isActive: true,
       theme: form.theme,
       owner: user._id
     })

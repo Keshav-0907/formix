@@ -101,9 +101,28 @@ const formSlice = createSlice({
       state.theme = 'light';
       state.isActive = false;
       state.activeElement = null;
+    },
+    addPreset: (
+      state,
+      action: PayloadAction<{
+        elements: Element[];
+        title: string;
+        description: string;
+        theme: 'light' | 'dark';
+        isActive: boolean;
+        activeElement: Element | null;
+      }>
+    ) => {
+      console.log("Adding preset:", action.payload);
+      state.elements = action.payload.elements;
+      state.title = action.payload.title;
+      state.description = action.payload.description;
+      state.theme = action.payload.theme;
+      state.isActive = action.payload.isActive;
+      state.activeElement = action.payload.activeElement;
     }
   },
 });
 
-export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement, deleteElement, toggleRequired, resetFormSlice} = formSlice.actions;
+export const { addElement, setTitle, setDescription, setActiveElement, removeActiveElement, modifyElement, deleteElement, toggleRequired, resetFormSlice, addPreset} = formSlice.actions;
 export default formSlice.reducer;

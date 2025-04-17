@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { basicElements, layoutElements } from '@/utils/default';
 import ThemeSelector from './ThemeSelector';
+import FormPresets from './FormPresets';
 
 interface FormElementItemProps {
   type: string;
@@ -134,11 +135,7 @@ const ElementSelector = () => {
         </TabsContent>
 
         <TabsContent value="presets" className="flex-1 overflow-hidden">
-          <div className="flex flex-col items-center justify-center h-full p-4">
-            <p className="text-center text-sm text-muted-foreground">
-              Coming Soon
-            </p>
-          </div>
+          <FormPresets />
         </TabsContent>
 
         <TabsContent value="themes" className="flex-1 overflow-hidden">
