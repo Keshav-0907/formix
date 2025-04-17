@@ -16,11 +16,11 @@ const RecentForms = () => {
     useEffect(() => {
         if (!user) return
         const getRecentForms = async () => {
-            const res = await axios.post('/api/forms/getAll', {
-                owner: user._id
+            const res = await axios.post('/api/forms/recentForms', {
+                userId: user._id
             })
             if (res.status === 200) {
-                serRecetnForms(res.data)
+                serRecetnForms(res.data.forms)
             }
         }
         getRecentForms()

@@ -39,6 +39,8 @@ export async function DELETE(req: NextRequest) {
 
     await FormModel.findByIdAndDelete(formId);
 
+    await User.findByIdAndUpdate(user._id, { $pull: { forms: formId } });
+
     return new Response(JSON.stringify({ message: "Form deleted successfully" }), {
       status: 200,
       headers: { "Content-Type": "application/json" },

@@ -7,9 +7,9 @@ import { Switch } from '../ui/switch'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
-const FormSettings = ({ setShowFormSettings, form }) => {
+const FormSettings = ({ setShowFormSettings, form, formId }) => {
   const router = useRouter()
-  const [isActive, setIsActive] = useState(form.isActive) 
+  const [isActive, setIsActive] = useState(form.isActive)
 
   const handleBackdropClick = () => setShowFormSettings(false)
 
@@ -19,7 +19,7 @@ const FormSettings = ({ setShowFormSettings, form }) => {
     try {
       const token = localStorage.getItem('authToken')
       const res = await axios.delete('/api/forms/deleteForm', {
-        data: { formId: form._id },
+        data: { formId: formId },
         headers: { Authorization: `Bearer ${token}` },
       })
 

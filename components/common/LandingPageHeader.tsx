@@ -8,7 +8,14 @@ import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/hooks/useAuth'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '../ui/dropdown-menu'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
@@ -16,7 +23,6 @@ const LandingPageHeader = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { user, loading, logout } = useAuth()
   const router = useRouter()
-
 
   const handleLogOut = async () => {
     await logout()
@@ -38,46 +44,46 @@ const LandingPageHeader = () => {
       </nav>
 
       <div className="hidden md:flex">
-        {
-          user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger className="cursor-pointer flex items-center gap-2 outline-none">
-                <Avatar>
-                  <AvatarImage className='w-8 h-8 rounded-full' src={'https://avatars.githubusercontent.com/u/91189139?v=4'} />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div className="flex items-start flex-col">
-                  <div className="text-sm text-white">{user?.name}</div>
-                  <div className="text-xs text-gray-400">{user?.email}</div>
-                </div>
-              </DropdownMenuTrigger>
+        {loading ? (
+          <div className="h-10 w-32 bg-[#1a1a1a] animate-pulse rounded-sm" />
+        ) : user ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger className="cursor-pointer flex items-center gap-2 outline-none">
+              <Avatar>
+                <AvatarImage className='w-8 h-8 rounded-full' src={'https://avatars.githubusercontent.com/u/91189139?v=4'} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div className="flex items-start flex-col">
+                <div className="text-sm text-white">{user?.name}</div>
+                <div className="text-xs text-gray-400">{user?.email}</div>
+              </div>
+            </DropdownMenuTrigger>
 
-              <DropdownMenuContent className="top-2 absolute w-52 bg-[#1a1a1a] border border-[#2f2f2f] text-white shadow-lg">
-                <DropdownMenuLabel className="text-gray-300">Hi, {user?.name}</DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-[#2f2f2f]" />
-                <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">Profile</DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer" onClick={() => router.push('/dashboard/settings')}>Settings</DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">Help</DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">
-                  <div onClick={handleLogOut}>Sign Out</div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <div className='flex items-center gap-4'>
-              <Link href="/auth">
-                <button className="px-3 py-2 bg-[#0A0A0A] hover:bg-[#2a2a2a] rounded-sm">
-                  Login
-                </button>
-              </Link>
-              <Link href="/auth">
-                <button className="bg-[#004BE0] hover:bg-[#004BE0]/70 px-3 py-2 rounded-sm">
-                  Start Free Trial
-                </button>
-              </Link>
-            </div>
-          )
-        }
+            <DropdownMenuContent className="top-2 absolute w-52 bg-[#1a1a1a] border border-[#2f2f2f] text-white shadow-lg">
+              <DropdownMenuLabel className="text-gray-300">Hi, {user?.name}</DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-[#2f2f2f]" />
+              <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">Profile</DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer" onClick={() => router.push('/dashboard/settings')}>Settings</DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">Help</DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-[#2a2a2a] cursor-pointer">
+                <div onClick={handleLogOut}>Sign Out</div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <div className='flex items-center gap-4'>
+            <Link href="/auth">
+              <button className="px-3 py-2 bg-[#0A0A0A] hover:bg-[#2a2a2a] rounded-sm">
+                Login
+              </button>
+            </Link>
+            <Link href="/auth">
+              <button className="bg-[#004BE0] hover:bg-[#004BE0]/70 px-3 py-2 rounded-sm">
+                Start Free Trial
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="md:hidden">
@@ -95,7 +101,9 @@ const LandingPageHeader = () => {
             transition={{ duration: 0.2 }}
             className="absolute top-16 left-0 w-full bg-[#0A0A0A] border-t border-[#1F1F1F] flex flex-col gap-4 p-6 md:hidden"
           >
-            {user ? (
+            {loading ? (
+              <div className="w-full h-12 bg-[#1a1a1a] animate-pulse rounded-sm mb-4" />
+            ) : user ? (
               <div className="flex items-center gap-3 mb-4">
                 <Avatar>
                   <AvatarImage className='w-10 h-10 rounded-full' src={'https://avatars.githubusercontent.com/u/91189139?v=4'} />
@@ -147,7 +155,6 @@ const LandingPageHeader = () => {
               </>
             )}
           </motion.div>
-
         )}
       </AnimatePresence>
     </header>
