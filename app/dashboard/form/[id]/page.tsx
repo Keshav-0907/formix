@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import StatCard from '@/components/dashboard/StatCard'
 import { Button } from '@/components/ui/button'
 import FormResponses from '@/components/dashboard/FormResponses'
-import { Copy, Download, ExternalLink, RotateCcw, Settings, Sparkles } from 'lucide-react'
+import { Copy, Download, ExternalLink, Loader2, RotateCcw, Settings, Sparkles } from 'lucide-react'
 import FormSettings from '@/components/dashboard/FormSettings'
 import { useAuth } from '@/hooks/useAuth'
 import Image from 'next/image'
@@ -20,6 +20,7 @@ const SingleFormPage = () => {
   const { user, loading } = useAuth()
   const [reloadData, setReloadData] = useState(null)
   const [formLoading, setFormLoading] = useState(null)
+  const [refreshingData, setRefreshingData] = useState(false)
 
   const [responseData, setResponseData] = useState<any>(null)
   const [showFormSettings, setShowFormSettings] = useState(false)
@@ -62,12 +63,16 @@ const SingleFormPage = () => {
 
   const handleRefresh = () => {
     setReloadData(true)
+    setRefreshingData(true)
     setTimeout(() => {
       setReloadData(false)
     }, 1000)
 
     toast.success('Data refreshed!')
+    setRefreshingData(false)
   }
+
+  console.log('responseData', responseData)
 
   return (
     <div className='p-5 bg-[#1D1E21] h-screen'>
@@ -106,22 +111,19 @@ const SingleFormPage = () => {
 
             <div className='flex gap-2 flex-col'>
               <div className='flex justify-between items-center w-full'>
-                <div className=' text-lg font-medium text-white'>Responses</div>
+                <div className=' text-sm font-medium text-white'>Responses</div>
                 <div className='flex gap-2'>
                   <button className='text-xs flex items-center gap-1 text-white border-[1px] border-white/30 py-1 rounded-sm cursor-pointer px-2 shadow-sm'>
                     <Download strokeWidth={1} size={16} />
                     <span>Export Data</span>
                   </button>
-                  <button onClick={handleRefresh} className='text-xs flex items-center gap-1 text-white border-[1px] border-white/30 py-1 rounded-sm cursor-pointer px-2 shadow-sm'>
-                    <RotateCcw strokeWidth={1} size={16} />
+                  <button onClick={handleRefresh} className={`text-xs flex items-center gap-1 text-white border-[1px] border-white/30 py-1 rounded-sm cursor-pointer px-2 shadow-sm ${refreshingData ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                    {refreshingData ? <Loader2 className='animate-spin' size={16} /> : <RotateCcw strokeWidth={1} size={16} />}
                     <span>Refresh Data</span>
                   </button>
                 </div>
               </div>
-
-              <Separator />
-              <div>
-
+              <div className='bg-[#171717] p-4 rounded-xl border border-[#2E2E2F]'>
                 {responseData && responseData.responses && responseData.responses.length > 0 ? (
                   <FormResponses
                     responses={responseData.responses}
@@ -129,9 +131,9 @@ const SingleFormPage = () => {
                   />
                 ) : (
                   <div className="flex flex-col items-center justify-center h-full gap-5 text-center px-4">
-                    <Image src="/EmptyState.svg" width={200} height={200} alt="No Responses" />
+                    <Image src="/EmptyState.svg" width={100} height={100} alt="No Responses" />
 
-                    <span className="text-[#8E8E90] text-base font-medium">
+                    <span className="text-[#8E8E90] text-sm font-medium">
                       No responses yet. Share your form to start collecting responses!
                     </span>
 
@@ -154,7 +156,7 @@ const SingleFormPage = () => {
 
       {
         showFormSettings && (
-          <FormSettings setShowFormSettings={setShowFormSettings} form={responseData} formId={id}/>
+          <FormSettings setShowFormSettings={setShowFormSettings} form={responseData} formId={id} />
         )
       }
 

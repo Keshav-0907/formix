@@ -73,12 +73,12 @@ const LandingPageHeader = () => {
         ) : (
           <div className='flex items-center gap-4'>
             <Link href="/auth">
-              <button className="px-3 py-2 bg-[#0A0A0A] hover:bg-[#2a2a2a] rounded-sm">
+              <button className="px-3 py-2 bg-[#0A0A0A] hover:bg-[#7D5FF3]/40 rounded-sm cursor-pointer">
                 Login
               </button>
             </Link>
             <Link href="/auth">
-              <button className="bg-[#004BE0] hover:bg-[#004BE0]/70 px-3 py-2 rounded-sm">
+              <button className="bg-[#7D5FF3] hover:bg-[#7D5FF3]/70 px-3 py-2 rounded-sm cursor-pointer">
                 Start Free Trial
               </button>
             </Link>
@@ -148,7 +148,7 @@ const LandingPageHeader = () => {
                   </button>
                 </Link>
                 <Link href="/auth" onClick={() => setIsOpen(false)}>
-                  <button className="w-full bg-[#004BE0] hover:bg-[#004BE0]/70 px-3 py-2 rounded-sm">
+                  <button className="w-full bg-[#7D5FF3] hover:bg-[#7D5FF3]/70 px-3 py-2 rounded-sm">
                     Start Free Trial
                   </button>
                 </Link>

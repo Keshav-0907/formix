@@ -173,7 +173,7 @@ const Header = () => {
               {/* <Button variant='outline' className='bg-white text-black hover:bg-white/80'>
                 Preview
               </Button> */}
-              <Button onClick={handleFormSave} className='bg-white text-black hover:bg-white/80'>
+              <Button onClick={handleFormSave} className='bg-[#7D5FF3] text-white hover:bg-[#7D5FF3]/80'>
                 {saveLoading ? 'Saving...' : 'Save'}
               </Button>
             </div>

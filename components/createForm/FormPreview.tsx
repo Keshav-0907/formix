@@ -8,10 +8,11 @@ import { renderFormElement } from '@/utils/HelperFunctions';
 
 const FormPreview = () => {
   const { form, addFormElement, updateFormTitle, addActiveElement, updateFormDescription, removeFormElement } = useForm();
+  const usedTheme = 'midnight';
 
   const handleRemoveElement = async (id: string) => {
     removeFormElement(id);
-  };
+  };  
 
   const [{ isOver }, drop] = useDrop({
     accept: "FORM_ELEMENT",

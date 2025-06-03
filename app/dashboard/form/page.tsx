@@ -58,25 +58,27 @@ const Forms = () => {
         <p className='text-sm'>Create and manage your forms</p>
       </div>
 
-      <div className='flex flex-col sm:flex-row gap-3 sm:items-center justify-between'>
-        <Input
-          placeholder="Search forms..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="bg-[#2C2C2E] text-white border border-[#3F3F3F] w-full sm:max-w-sm"
-        />
-      </div>
+      <div className='flex flex-col gap-4 bg-[#171717] p-4 min-h-[50vh] rounded-xl border border-[#2E2E2F]'>
+        <div className='flex flex-col sm:flex-row gap-3 sm:items-center justify-between'>
+          <Input
+            placeholder="Search forms..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="bg-[#2C2C2E] text-white border border-[#3F3F3F] w-full sm:max-w-sm placeholder:text-white/40"
+          />
+        </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
-        {
-          filteredForms.length > 0 ? (
-            filteredForms.map((form: any) => (
-              <FormCard key={form._id} form={form} handleFormDelete={handleFormDelete}/>
-            ))
-          ) : (
-            <div className='col-span-3 text-center text-gray-500'>No forms found</div>
-          )
-        }
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full h-full items-center justify-center'>
+          {
+            filteredForms.length > 0 ? (
+              filteredForms.map((form: any) => (
+                <FormCard key={form._id} form={form} handleFormDelete={handleFormDelete} />
+              ))
+            ) : (
+              <div className='col-span-3 text-center text-gray-500'>No forms found</div>
+            )
+          }
+        </div>
       </div>
     </div>
   )

@@ -8,6 +8,7 @@ import confetti from 'canvas-confetti'
 import { Skeleton } from '@/components/ui/skeleton'
 import { motion } from 'framer-motion'
 import { AlertTriangle, CheckCircle } from 'lucide-react'
+import Link from 'next/link'
 
 const PublicForm = () => {
   const { formId } = useParams()
@@ -159,7 +160,9 @@ const PublicForm = () => {
                     Submit
                   </button>
                 </div>
-                <div className='bg-white border-t border-[#E0E0E0] text-xs px-2 py-1'>Powered by Formix</div>
+                <div className='border-t border-[#E0E0E0]'>
+                  <Link target='_blank' href='https://formix-seven.vercel.app/' className='bg-white text-xs px-2 py-1'>Powered by Formix</Link>
+                </div>
               </div>
             )}
           </div>

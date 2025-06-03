@@ -7,8 +7,9 @@ import RecentFormCard from './RecentFormCard'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
+import CreateFormModal from './CreateFormModal'
 
-const RecentForms = () => {
+const RecentForms = ({ setCreateFormModal }: { setCreateFormModal: (modal: boolean) => void }) => {
     const { user } = useAuth()
     const [recentForms, serRecetnForms] = useState([])
     const router = useRouter()
@@ -26,6 +27,9 @@ const RecentForms = () => {
         getRecentForms()
     }, [user])
 
+    const handleCreateForm = () => {
+        setCreateFormModal(true)
+    }
 
 
     return (
@@ -48,10 +52,8 @@ const RecentForms = () => {
                                     You have not created any forms yet.
                                 </div>
                             </div>
-                            <button onClick={()=>router.push('/dashboard/form/create')} className="text-[#D1D5DB] bg-[#1A1C22] hover:bg-[#2A2D34] border border-[#4B4B4B] flex items-center gap-2 text-sm px-3 py-2 rounded-md cursor-pointer transition-colors duration-200">
-                                <Plus size={16} />
-                                Create New Form
-                            </button>
+                            {/* <button onClick={()=>router.push('/dashboard/form/create')} className="text-[#D1D5DB] bg-[#1A1C22] hover:bg-[#2A2D34] border border-[#4B4B4B] flex items-center gap-2 text-sm px-3 py-2 rounded-md cursor-pointer transition-colors duration-200"> */}
+                           <CreateFormModal/>
                         </div>
                     )
                 }

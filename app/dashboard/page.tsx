@@ -1,5 +1,5 @@
 'use client'
-import React, { use, useEffect } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import StatCard from '@/components/dashboard/StatCard'
@@ -16,6 +16,7 @@ const DashboardPage = () => {
   const { user, loading } = useAuth()
   const router = useRouter()
   const [stats, setStats] = React.useState<any>(null)
+  const [createFormModal, setCreateFormModal] = useState(false)
 
   useEffect(() => {
     if (!user) return;
@@ -73,7 +74,7 @@ const DashboardPage = () => {
         <div className='text-sm font-bold text-[#F8F8F8]'>
           Recent Forms
         </div>
-        <RecentForms />
+        <RecentForms setCreateFormModal={setCreateFormModal}/>
       </div>
     </div>
 

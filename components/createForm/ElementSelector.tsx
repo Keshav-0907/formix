@@ -63,8 +63,8 @@ const FormElementItem: React.FC<FormElementItemProps> = ({
 };
 
 
-const ElementSelector = () => {
-  const [activeTab, setActiveTab] = useState("elements");
+const ElementSelector = ({ type }: { type: string }) => {
+  const [activeTab, setActiveTab] = useState(type || "elements");
 
   return (
     <div className="border-r h-full flex flex-col text-[#8E8E90] pt-2 px-2 bg-[#1D1E21]">
@@ -72,19 +72,19 @@ const ElementSelector = () => {
         <TabsList className="w-full bg-[#1A1C22] border border-[#3A3A3A] rounded-lg p-1 flex gap-1">
           <TabsTrigger
             value="elements"
-            className="w-full px-4 py-2 text-sm cursor-pointer text-[#C0C0C0] rounded-md transition-colors duration-200 data-[state=active]:bg-[#465130] data-[state=active]:text-white hover:bg-[#2A2D34]"
+            className="w-full px-4 py-2 text-sm cursor-pointer text-[#C0C0C0] rounded-md transition-colors duration-200 data-[state=active]:bg-[#7D5FF3] data-[state=active]:text-white hover:bg-[#2A2D34]"
           >
             Elements
           </TabsTrigger>
           <TabsTrigger
             value="presets"
-            className="w-full px-4 py-2 text-sm text-[#C0C0C0] cursor-pointer rounded-md transition-colors duration-200 data-[state=active]:bg-[#465130] data-[state=active]:text-white hover:bg-[#2A2D34]"
+            className="w-full px-4 py-2 text-sm text-[#C0C0C0] cursor-pointer rounded-md transition-colors duration-200 data-[state=active]:bg-[#7D5FF3] data-[state=active]:text-white hover:bg-[#2A2D34]"
           >
             Presets
           </TabsTrigger>
           <TabsTrigger
             value="themes"
-            className="w-full px-4 py-2 text-sm text-[#C0C0C0] cursor-pointer rounded-md transition-colors duration-200 data-[state=active]:bg-[#465130] data-[state=active]:text-white hover:bg-[#2A2D34]"
+            className="w-full px-4 py-2 text-sm text-[#C0C0C0] cursor-pointer rounded-md transition-colors duration-200 data-[state=active]:bg-[#7D5FF3] data-[state=active]:text-white hover:bg-[#2A2D34]"
           >
             Themes
           </TabsTrigger>

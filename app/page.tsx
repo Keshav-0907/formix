@@ -37,10 +37,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen h-full bg-[#0A0A0A] dark">
+    <div className="min-h-screen h-full bg-[#0E0D13] dark">
       <LandingPageHeader />
 
-      <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-background px-4 md:px-6">
+      <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-[#0E0D13] px-4 md:px-6">
         <DotPattern
           className={cn(
             "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]"
@@ -96,7 +96,7 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="flex gap-4 md:gap-10 text-sm flex-wrap justify-center">
-                  <button className="bg-[#004BE0] hover:bg-[#004BE0]/80 px-3 py-2 cursor-pointer rounded-sm flex items-center gap-2">
+                  <button className="bg-[#7D5FF3] hover:bg-[#7D5FF3]/80 px-3 py-2 cursor-pointer rounded-sm flex items-center gap-2">
                     Start Free Trial <Send size={14} />
                   </button>
                   <button className="px-3 py-2 cursor-pointer bg-[#0A0A0A] hover:bg-[#2a2a2a] rounded-sm">
@@ -109,7 +109,7 @@ export default function Home() {
         </motion.div>
       </div>
 
-      <div className="text-[#F8F8F8] px-4 md:px-6 py-20 flex flex-col gap-10 items-center justify-center bg-background relative overflow-hidden">
+      <div className="text-[#F8F8F8] px-4 md:px-6 py-20 flex bg-[#0E0D13] flex-col gap-10 items-center justify-center relative overflow-hidden">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
