@@ -54,7 +54,7 @@ const FormBuilder = () => {
       onDragEnd={handleDragEnd}
     >
       <div className="flex h-screen">
-        <ElementSelector />
+        <ElementSelector type="elements" />
         <FormPreview 
           // formElements={formElements} 
           // onElementsChange={setFormElements} 

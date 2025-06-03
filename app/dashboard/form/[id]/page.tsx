@@ -14,6 +14,21 @@ import { Separator } from '@/components/ui/separator'
 import toast from 'react-hot-toast'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import * as XLSX from 'xlsx'
+import { jsPDF } from 'jspdf'
+import autoTable from 'jspdf-autotable'
+
+declare module 'jspdf' {
+  interface jsPDF {
+    autoTable: (options: any) => jsPDF;
+  }
+}
 
 const SingleFormPage = () => {
   const { id } = useParams()
@@ -72,6 +87,61 @@ const SingleFormPage = () => {
     setRefreshingData(false)
   }
 
+  const exportToExcel = () => {
+    if (!responseData?.responses || responseData.responses.length === 0) {
+      toast.error('No data to export!')
+      return
+    }
+
+    // Transform responses to match headers
+    const formattedResponses = responseData.responses.map((item: any, index: number) => {
+      const formattedResponse: any = { 'S.No': index + 1 }
+      item.response.forEach((resp: any) => {
+        const header = responseData.headers.find((h: any) => h.id === resp.id)
+        if (header) {
+          formattedResponse[header.header] = resp.response
+        }
+      })
+      return formattedResponse
+    })
+
+    const worksheet = XLSX.utils.json_to_sheet(formattedResponses)
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Responses')
+    XLSX.writeFile(workbook, `${responseData.title}_responses.xlsx`)
+    toast.success('Exported to Excel successfully!')
+  }
+
+  const exportToPDF = () => {
+    if (!responseData?.responses || responseData.responses.length === 0) {
+      toast.error('No data to export!')
+      return
+    }
+
+    const doc = new jsPDF()
+    
+    // Transform responses to match headers
+    const tableData = responseData.responses.map((item: any, index: number) => {
+      const formattedResponse: any = {}
+      item.response.forEach((resp: any) => {
+        const header = responseData.headers.find((h: any) => h.id === resp.id)
+        if (header) {
+          formattedResponse[header.header] = resp.response
+        }
+      })
+      return [index + 1, ...responseData.headers.map((header: any) => formattedResponse[header.header] || '')]
+    })
+
+    autoTable(doc, {
+      head: [['S.No', ...responseData.headers.map((h: any) => h.header)]],
+      body: tableData,
+      startY: 25,
+    })
+
+    doc.save(`${responseData.title}_responses.pdf`)
+    toast.success('Exported to PDF successfully!')
+  }
+
   console.log('responseData', responseData)
 
   return (
@@ -113,10 +183,28 @@ const SingleFormPage = () => {
               <div className='flex justify-between items-center w-full'>
                 <div className=' text-sm font-medium text-white'>Responses</div>
                 <div className='flex gap-2'>
-                  <button className='text-xs flex items-center gap-1 text-white border-[1px] border-white/30 py-1 rounded-sm cursor-pointer px-2 shadow-sm'>
-                    <Download strokeWidth={1} size={16} />
-                    <span>Export Data</span>
-                  </button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className='text-xs flex items-center gap-1 text-white border-[1px] border-white/30 py-1 rounded-sm cursor-pointer px-2 shadow-sm'>
+                        <Download strokeWidth={1} size={16} />
+                        <span>Export Data</span>
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="bg-[#171717] border border-[#2E2E2F]">
+                      <DropdownMenuItem 
+                        className="text-white hover:bg-[#2E2E2F] cursor-pointer text-sm"
+                        onClick={exportToExcel}
+                      >
+                        Export as Excel
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        className="text-white hover:bg-[#2E2E2F] cursor-pointer text-sm"
+                        onClick={exportToPDF}
+                      >
+                        Export as PDF
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   <button onClick={handleRefresh} className={`text-xs flex items-center gap-1 text-white border-[1px] border-white/30 py-1 rounded-sm cursor-pointer px-2 shadow-sm ${refreshingData ? 'opacity-50 cursor-not-allowed' : ''}`}>
                     {refreshingData ? <Loader2 className='animate-spin' size={16} /> : <RotateCcw strokeWidth={1} size={16} />}
                     <span>Refresh Data</span>
