@@ -86,7 +86,7 @@ export default function Home() {
             {
               user ? (
                 <div className="flex gap-4 md:gap-10 text-sm flex-wrap justify-center">
-                  <button onClick={()=>router.push('/dashboard')} className="bg-[#004BE0] hover:bg-[#004BE0]/80 px-3 py-2 cursor-pointer rounded-sm flex items-center gap-2">
+                  <button onClick={()=>router.push('/dashboard')} className="bg-[#7D5FF3] hover:bg-[#7D5FF3]/80 px-3 py-2 cursor-pointer rounded-sm flex items-center gap-2">
                     Go to Dashboard <Send size={14} />
                   </button>
 

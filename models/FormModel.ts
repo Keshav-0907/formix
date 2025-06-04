@@ -59,6 +59,7 @@ const formSchema = new mongoose.Schema<IFormDocument>({
     elements: [FormElementSchema],
     owner: { type: String, required: true },
     responses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Response', default: [] }],
+    views: { type: Number, default: 0, required: true },
 }, {
     timestamps: true
 });

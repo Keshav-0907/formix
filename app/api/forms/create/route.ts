@@ -28,6 +28,7 @@ export async function POST(request: Request) {
       elements: data.elements || [],
       owner: data.owner,
       responses: data.responses || [],
+      views: 0,
     });
 
     const savedForm = await newForm.save();

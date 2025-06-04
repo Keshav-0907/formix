@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
 
    await connectToDb()
 
-   const res = await FormModel.findById(id)
+   const res = await FormModel.findById(id).select("-responses -owner")
 
     if (!res) {
         return NextResponse.json({message: "Form not found"}, {status: 404})

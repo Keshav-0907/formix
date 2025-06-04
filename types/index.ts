@@ -30,6 +30,7 @@ export interface IForm {
   owner: string;
   responses: object[];
   background: string;
+  views: number;
 }
 
 export type FormElement = {

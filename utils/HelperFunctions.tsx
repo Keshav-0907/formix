@@ -10,9 +10,9 @@ export const renderFormElement = (
     switch (element.type) {
         case 'input':
             return (
-                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
-                    {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
-                    <div className="flex flex-col gap-1 w-full">
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-[#2C2C2E]'} p-2 rounded-md transition-all`}>
+                    {mode === 'edit' && <GripVertical className='w-4 h-4 text-white cursor-grab' />}
+                    <div className="flex flex-col gap-1 w-full text-white">
                         <div className="flex justify-between">
                             {
                                 mode === 'edit' ? (
@@ -23,8 +23,7 @@ export const renderFormElement = (
                                             required={element.required}
                                             value={(element.data as InputElement).heading || ''}
                                             disabled
-                                            className="text-sm font-semibold placeholder:font-normal w-full"
-
+                                            className="text-sm font-semibold placeholder:font-normal w-full placeholder:text-white"
                                         />
                                         <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
                                     </div>
@@ -43,16 +42,16 @@ export const renderFormElement = (
                             required={element.required}
                             value={value || ''}
                             onChange={(e) => onChange?.(e.target.value)}
-                            className="px-2 py-1 text-sm border border-gray-300 rounded-md w-full"
+                            className="px-2 py-1 text-sm border border-[#3F3F3F] rounded-md w-full"
                         />
                     </div>
                 </div>
             );
         case 'textarea':
             return (
-                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
-                    {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
-                    <div className="flex flex-col gap-1 w-full">
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-[#2C2C2E]'} p-2 rounded-md transition-all`}>
+                    {mode === 'edit' && <GripVertical className='w-4 h-4 text-white cursor-grab' />}
+                    <div className="flex flex-col gap-1 w-full text-white">
                         <div className="flex justify-between">
                             <input
                                 type="text"
@@ -60,7 +59,7 @@ export const renderFormElement = (
                                 required={element.required}
                                 value={(element.data as TextAreaElement).heading || ''}
                                 disabled
-                                className="text-sm font-semibold placeholder:font-normal w-full"
+                                className="text-sm font-semibold placeholder:font-normal w-full placeholder:text-white"
                             />
                             <div> {element.required && (<div className="text-xs text-red-500 font-semibold"> Required </div>)} </div>
                         </div>
@@ -68,7 +67,7 @@ export const renderFormElement = (
                             placeholder={(element.data as TextAreaElement).placeholder || 'Add Placeholder'}
                             required={element.required}
                             onChange={(e) => onChange?.(e.target.value)}
-                            className="w-full px-2 py-1 text-sm border border-gray-300 rounded-md resize-none"
+                            className="w-full px-2 py-1 text-sm border border-[#2E2E2F] rounded-md resize-none"
                             rows={4}
                         />
                     </div>
@@ -79,34 +78,34 @@ export const renderFormElement = (
             const headingStyle = () => {
                 switch ((element.data as HeadingElement).level) {
                     case 'h1':
-                        return 'text-4xl font-bold';
+                        return 'text-4xl font-bold text-white';
                     case 'h2':
-                        return 'text-3xl font-semibold';
+                        return 'text-3xl font-semibold text-white';
                     case 'h3':
-                        return 'text-2xl font-medium';
+                        return 'text-2xl font-medium text-white';
                     case 'h4':
-                        return 'text-xl font-normal';
+                        return 'text-xl font-normal text-white';
                     case 'h5':
-                        return 'text-base';
+                        return 'text-base text-white';
                     case 'h6':
-                        return 'text-sm';
+                        return 'text-sm text-white';
                     default:
-                        return 'text-base font-normal';
+                        return 'text-base font-normal text-white';
                 }
             };
             return (
-                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
-                    {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-[#2C2C2E]'} p-2 rounded-md transition-all`}>
+                    {mode === 'edit' && <GripVertical className='w-4 h-4 text-white cursor-grab' />}
                     <div className={`${headingStyle()}`}>{(element.data as HeadingElement).heading || 'This is a heading'}</div>
                 </div>
             );
         case 'paragraph':
             return (
-                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-blue-50'} p-2 rounded-md transition-all`}>
+                <div className={`flex items-center gap-2 ${mode === 'edit' && 'hover:bg-[#2C2C2E]'} p-2 rounded-md transition-all`}>
                     <div className="flex items-center">
-                        {mode === 'edit' && <GripVertical className='w-4 h-4 text-gray-400 cursor-grab' />}
+                        {mode === 'edit' && <GripVertical className='w-4 h-4 text-white cursor-grab' />}
                     </div>
-                    <p className="text-gray-600 placeholder:text-sm">{(element.data as ParagraphElement).content || 'Add paragraph content'}</p>
+                    <p className="text-white placeholder:text-sm">{(element.data as ParagraphElement).content || 'Add paragraph content'}</p>
                 </div>
             );
         case 'divider':

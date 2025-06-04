@@ -35,8 +35,7 @@ const RecentFormCard = ({ form }) => {
           </div>
         </div>
 
-        {/* Right Section */}
-        <div className="flex flex-col gap-2 items-end">
+        {/* <div className="flex flex-col gap-2 items-end">
           <div className="flex gap-4 text-xs items-center ml-4 text-gray-300">
             <div className="flex gap-1 items-center">
               <CheckCheck className="w-4 h-4 text-green-400" strokeWidth={1.5} />
@@ -47,7 +46,7 @@ const RecentFormCard = ({ form }) => {
               {form.views || 0}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

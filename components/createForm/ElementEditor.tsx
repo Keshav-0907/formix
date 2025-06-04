@@ -172,7 +172,7 @@ const ElementEditor = () => {
               placeholder='Add content'
               rows={4}
               onChange={(e) => handleChange('content', e.target.value)}
-              className='border-[1px] outline-no p-2 rounded w-full text-white'
+              className='border border-[#2E2E2F] outline-no p-2 rounded w-full text-white placeholder:text-sm text-sm outline-none'
             />
           </div>
         );
@@ -184,7 +184,7 @@ const ElementEditor = () => {
   };
 
   return (
-    <div className='w-full h-full border-l flex flex-col justify-between p-2 relative bg-[#1D1E21]' ref={editorRef}>
+    <div className='w-full h-full border-l-[1px] border-[#2E2E2E] flex flex-col justify-between p-2 relative bg-[#1D1E21]' ref={editorRef}>
       {
         form.activeElement ? (
           <>

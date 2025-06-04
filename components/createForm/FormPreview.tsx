@@ -36,20 +36,20 @@ const FormPreview = () => {
   });
 
   return (
-    <div className="w-full h-full p-6 bg-gradient-to-b from-slate-200 to-slate-100">
-      <div className="w-full max-h-[85vh] bg-white rounded-lg p-4 shadow-xl flex flex-col gap-6 overflow-y-auto">
+    <div className="w-full h-full p-6 bg-[#0E0D13]">
+      <div className="w-full max-h-[85vh] bg-[#171717] rounded-lg p-4 shadow-xl flex flex-col gap-6 overflow-y-auto">
 
         <div className='w-full flex flex-col gap-2'>
           <input
             type="text"
             placeholder='Form Title'
-            className='w-full text-2xl font-semibold text-gray-800 focus:outline-none focus:border-blue-500 transition'
+            className='w-full text-2xl font-semibold text-white outline-none  transition placeholder:text-white'
             value={form.title}
             onChange={(e) => updateFormTitle(e.target.value)}
           />
           <textarea
             placeholder="Add Some Description"
-            className="w-full text-gray-800 pb-2 text-sm border-b border-gray-300 focus:outline-none focus:border-blue-500 transition resize-none overflow-y-auto"
+            className="w-full text-white pb-2 text-sm border-b border-gray-300 outline-none transition resize-none overflow-y-auto"
             value={form.description}
             onChange={(e) => updateFormDescription(e.target.value)}
             rows={2}
@@ -60,7 +60,7 @@ const FormPreview = () => {
         {/* Drop Area */}
         <div
           ref={drop as any}
-          className={`w-full py-5 min-h-[65vh] h-full px-1 rounded-lg transition-all ${isOver ? 'bg-blue-50' : ''
+          className={`w-full py-5 min-h-[65vh] h-full px-1 rounded-lg transition-all ${isOver ? 'bg-[#2C2C2E]' : ''
             }`}
         >
           {form.elements.length === 0 ? (

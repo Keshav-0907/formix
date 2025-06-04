@@ -67,7 +67,7 @@ const ElementSelector = ({ type }: { type: string }) => {
   const [activeTab, setActiveTab] = useState(type || "elements");
 
   return (
-    <div className="border-r h-full flex flex-col text-[#8E8E90] pt-2 px-2 bg-[#1D1E21]">
+    <div className="border-r-[1px] border-[#2E2E2E] h-full flex flex-col text-[#8E8E90] pt-2 px-2 bg-[#1D1E21]">
       <Tabs defaultValue="elements" value={activeTab} onValueChange={setActiveTab} className="w-full bg-[#1A1C22] rounded-lg p-1 flex gap-1">
         <TabsList className="w-full bg-[#1A1C22] border border-[#3A3A3A] rounded-lg p-1 flex gap-1">
           <TabsTrigger

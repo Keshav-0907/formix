@@ -20,12 +20,15 @@ const RecentForms = ({ setCreateFormModal }: { setCreateFormModal: (modal: boole
             const res = await axios.post('/api/forms/recentForms', {
                 userId: user._id
             })
+            console.log(res.data)
             if (res.status === 200) {
                 serRecetnForms(res.data.forms)
             }
         }
         getRecentForms()
     }, [user])
+    
+
 
     const handleCreateForm = () => {
         setCreateFormModal(true)

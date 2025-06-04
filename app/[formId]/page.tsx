@@ -77,7 +77,7 @@ const PublicForm = () => {
   }
 
   return (
-    <div className='bg-[#1F2937] h-screen flex justify-center p-5 items-center'>
+    <div className='bg-[#0E0D13] h-screen flex justify-center p-5 items-center'>
       {
         isFormSubmitted ? (
           <div className='md:w-1/2 w-full h-full rounded-lg shadow-lg flex flex-col px-4 relative'>
@@ -107,7 +107,7 @@ const PublicForm = () => {
           </motion.div>
           </div>
         ) : (
-          <div className='md:w-1/2 w-full h-full border-2 border-[#E0E0E0] bg-white rounded-lg shadow-lg flex flex-col px-4 relative'>
+          <div className='md:w-1/2 w-full h-full border-[1px] border-[#2E2E2E] text-white bg-[#171717] rounded-lg shadow-lg flex flex-col px-4 relative'>
             <div className='py-4'>
               {loading ? (
                 <>
@@ -117,7 +117,7 @@ const PublicForm = () => {
               ) : (
                 <>
                   <div className='text-2xl font-semibold'>{form?.title}</div>
-                  <div className='text-sm text-[#434343]'>{form?.description}</div>
+                  <div className='text-sm text-[#888888]'>{form?.description}</div>
                 </>
               )}
             </div>
@@ -155,13 +155,13 @@ const PublicForm = () => {
                 <div className='p-2'>
                   <button
                     onClick={handleSubmit}
-                    className='bg-black text-white text-sm py-2 px-4 rounded-md mt-4 cursor-pointer'
+                    className='bg-[#7D5FF3] hover:bg-[#6B49D6] text-white w-full text-sm py-2 px-4 rounded-md mt-4 cursor-pointer'
                   >
                     Submit
                   </button>
                 </div>
-                <div className='border-t border-[#E0E0E0]'>
-                  <Link target='_blank' href='https://formix-seven.vercel.app/' className='bg-white text-xs px-2 py-1'>Powered by Formix</Link>
+                <div className=''>
+                  <Link target='_blank' href='https://formix-seven.vercel.app/' className='text-xs px-2 py-1'>Powered by Formix</Link>
                 </div>
               </div>
             )}
