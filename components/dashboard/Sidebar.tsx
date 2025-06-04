@@ -28,13 +28,13 @@ const Sidebar = () => {
         href: "/dashboard/settings"
       }
     ],
-    "premium": [
-      {
-        name: "Go Premium",
-        icon: Sparkles,
-        href: "/dashboard/premium"
-      }
-    ]
+    // "premium": [
+    //   {
+    //     name: "Go Premium",
+    //     icon: Sparkles,
+    //     href: "/dashboard/premium"
+    //   }
+    // ]
   }
 
   const handleTabChange = (tab: string) => {
@@ -81,7 +81,7 @@ const Sidebar = () => {
               }
             </div>
           </div>
-          <div className='flex flex-col gap-2'>
+          {/* <div className='flex flex-col gap-2'>
             <div className='text-xs'> Premium  </div>
             <div className='flex flex-col gap-1 md:gap-2 items-center md:items-start'>
               {
@@ -97,7 +97,7 @@ const Sidebar = () => {
                 ))
               }
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

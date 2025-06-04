@@ -10,7 +10,7 @@ const Settings = () => {
   const { user } = useAuth()
 
   const handlePasswordChange = () => {
-    if(user.email === 'demo@guest.com'){
+    if (user.email === 'demo@guest.com') {
       toast.error('You cannot change the password for the demo account')
       return
     }
@@ -20,8 +20,13 @@ const Settings = () => {
 
   return (
     <div className='bg-[#1D1E21] h-full text-[#8E8E90] p-5 flex flex-col gap-4'>
-      <div className='text-2xl font-semibold'>
-        Settings
+      <div>
+        <div className='text-2xl font-semibold text-white'>
+          Settings
+        </div>
+        <p className='text-sm'>
+          Manage your account settings and preferences
+        </p>
       </div>
 
       <div className='flex flex-col gap-4 bg-[#171717] p-4 min-h-[50vh] rounded-xl border border-[#2E2E2F]'>
